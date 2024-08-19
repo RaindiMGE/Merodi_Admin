@@ -1,6 +1,6 @@
-'use client'
+'use clinet'
 
-import styles from "./page.module.css";
+import styles from './page.module.scss';
 
 export default function Home() {
   return (
