@@ -5,7 +5,7 @@ import styles from './SecondaryButton.module.scss';
 interface Props {
     title: string;
     isBlue?: boolean;
-    disabled?: boolean | false;
+    disabled?: boolean;
 }
 
 const SecondaryButton = (props: Props) => {
