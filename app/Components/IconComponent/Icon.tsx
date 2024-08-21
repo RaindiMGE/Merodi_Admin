@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import styles from './Icon.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
     icon: string;
@@ -27,9 +27,11 @@ const Icon = (props: Props) => {
     }
 
     const handleOnClick = () => {
-        if (currentIcon == props.icon) setCurrentIcon(props.clickedIcon);
-        else setCurrentIcon(props.icon)
-        if (props.onClick) props.onClick()
+        if((currentIcon == props.icon) || (currentIcon == props.hoverIcon)) setCurrentIcon(props.clickedIcon);
+        else {
+            setCurrentIcon(props.icon)
+            if (props.onClick) props.onClick()
+        }
     }
 
     return <button
@@ -38,7 +40,7 @@ const Icon = (props: Props) => {
         onClick={handleOnClick}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
-        >
+    >
         <Image src={`/icons/${currentIcon}`} alt='icon' width={props.iconSize} height={props.iconSize} />
     </button>
 }
