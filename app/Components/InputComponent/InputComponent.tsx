@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 interface Props {
     placeholder: string;
-    isAdmin?: boolean;
+    isForPassword?: boolean;
     error: FieldError;
     register: UseFormRegisterReturn;
     isLoginInput?: boolean;
@@ -15,7 +15,7 @@ interface Props {
 
 const Input = (props: Props) => {
 
-    const [inputType, setInputType] = useState(props.isAdmin ? 'password' : 'text')
+    const [inputType, setInputType] = useState(props.isForPassword ? 'password' : 'text')
 
     const onClick = () => {
         if (inputType == 'text') setInputType('password')
@@ -27,7 +27,7 @@ const Input = (props: Props) => {
             borderColor: props.error ? '#FF3333' : '',
         }}>
             <input type={'email'} placeholder={props.placeholder} {...props.register} className={styles.input} />
-            {props.isAdmin && <Image src={'/icons/defaultShowPassword.svg'} alt='show password' width={24} height={24} onClick={onClick} />}
+            {props.isForPassword && <Image src={'/icons/defaultShowPassword.svg'} alt='show password' width={24} height={24} onClick={onClick} />}
         </div>
         {props.error && <span className={styles.error}>{props.error.message}</span>}
     </div>
