@@ -1,0 +1,107 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+
+    .inputWrapper {
+        display: flex;
+        padding: 16px;
+        width: 100%;
+        gap: 8px;
+        border-radius: 8px;
+        border: 1px solid #DCE7EF;
+        background: #FFF;
+
+        .input {
+            all: unset;
+            color: #2E3238;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+            width: 100%;
+
+            &::placeholder {
+                color: #737E8C;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 20px;
+            }
+
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+
+            &:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+
+            &:-webkit-autofill:hover {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+
+            &:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+        }
+    }
+
+    .loginInputWrapper {
+        display: flex;
+        padding: 12px 0;
+        width: 100%;
+        gap: 8px;
+        border-radius: 8px;
+        border: 0;
+        background: #FFF;
+        border-bottom: 1px solid #E3E5E8;
+
+        .input {
+            all: unset;
+            color: #2E3238;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+            width: 100%;
+
+            &::placeholder {
+                color: #737E8C;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 20px;
+            }
+
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+
+            &:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+
+            &:-webkit-autofill:hover {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+
+            &:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+                -webkit-text-fill-color: #2E3238;
+            }
+        }
+    }
+
+    .error {
+        color: #F33;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 18px;
+    }
+}
