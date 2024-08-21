@@ -3,13 +3,13 @@
 import styles from './InputComponent.module.scss';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { useState } from 'react';
-import Image from 'next/image';
+import Icon from '../IconComponent/Icon';
 
 interface Props {
     placeholder: string;
     isForPassword?: boolean;
-    error: FieldError;
-    register: UseFormRegisterReturn;
+    error?: FieldError;
+    register?: UseFormRegisterReturn;
     isLoginInput?: boolean;
 }
 
@@ -17,7 +17,7 @@ const Input = (props: Props) => {
 
     const [inputType, setInputType] = useState(props.isForPassword ? 'password' : 'text')
 
-    const onClick = () => {
+    const showPasswordClick = () => {
         if (inputType == 'text') setInputType('password')
         else setInputType('text')
     }
@@ -26,8 +26,8 @@ const Input = (props: Props) => {
         <div className={props.isLoginInput ? styles.loginInputWrapper : styles.inputWrapper} style={{
             borderColor: props.error ? '#FF3333' : '',
         }}>
-            <input type={'email'} placeholder={props.placeholder} {...props.register} className={styles.input} />
-            {props.isForPassword && <Image src={'/icons/defaultShowPassword.svg'} alt='show password' width={24} height={24} onClick={onClick} />}
+            <input type={inputType} placeholder={props.placeholder} {...props.register} className={styles.input} />
+            {props.isForPassword && <Icon icon='defaultShowPassword.svg' clickedIcon='clickedShowPassword.svg' hoverIcon='hoverShowPassword.svg' iconSize={24} onClick={showPasswordClick} />}
         </div>
         {props.error && <span className={styles.error}>{props.error.message}</span>}
     </div>
