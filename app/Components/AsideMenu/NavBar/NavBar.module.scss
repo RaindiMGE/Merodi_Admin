@@ -1,0 +1,37 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+
+    .link {
+        all: unset;
+
+        .page {
+            display: flex;
+            padding: 8px 16px 8px 12px;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+            align-self: stretch;
+            width: 224px;
+            border-radius: 4px;
+        }
+
+        .active {
+            border-left: 3px solid #0142FE;
+            background: #F1F5FF;
+            color: #0142FE;
+        }
+
+        .default {
+            color: #5C6B7E;
+
+            &:hover {
+                background-color: #e8e6f676;
+            }
+        }
+    }
+}
