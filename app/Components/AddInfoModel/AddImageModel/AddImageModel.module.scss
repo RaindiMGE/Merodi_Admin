@@ -1,0 +1,21 @@
+.addImageModel {
+    border: 1px dashed #737E8C;
+    width: 208px;
+    height: 208px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .chooseImgInput {
+        opacity: 0;
+        position: absolute;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+    }
+
+    .afterChoose {
+        display: none;
+    }
+}
