@@ -54,6 +54,7 @@
     .loginInputWrapper {
         display: flex;
         padding: 12px 0;
+        max-width: 512px;
         width: 100%;
         gap: 8px;
         border-radius: 8px;
@@ -67,6 +68,7 @@
             font-size: 16px;
             font-weight: 500;
             line-height: 20px;
+            max-width: 512px;
             width: 100%;
 
             &::placeholder {
