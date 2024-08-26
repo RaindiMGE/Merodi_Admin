@@ -1,4 +1,4 @@
-'use clinet'
+'use client'
 
 import styles from './page.module.scss';
 
