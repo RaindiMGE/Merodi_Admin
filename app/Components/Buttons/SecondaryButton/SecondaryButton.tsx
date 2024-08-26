@@ -10,7 +10,11 @@ interface Props {
 }
 
 const SecondaryButton = (props: Props) => {
-    return <button onClick={props.onClick} disabled={props.disabled} type='button' className={`${styles.button} ${props.isBlue ? styles.blueButton : styles.grayButton}`}>
+        disabled={props.disabled}
+        type='button'
+        className={`${styles.button} ${props.isBlue ? styles.blueButton : styles.grayButton}`}
+        onClick={props.onClick}
+    >
         {props.title}
     </button>
 }
