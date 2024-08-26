@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import styles from './InfoPop-ups.module.scss';
-import { useEffect, useState } from 'react';
 
 interface Props {
     message: string;
@@ -11,12 +10,7 @@ interface Props {
 
 const InfoPopUp = (props: Props) => {
 
-    const [icon, setIcon] = useState(props.type == 'success' ? 'successIcon.svg' : 'errorIcon.svg');
-
-    useEffect(() => {
-        setIcon(props.type == 'success' ? 'successIcon.svg' : 'errorIcon.svg')
-    }, [props.type])
-
+    const icon = props.type == 'success' ? 'successIcon.svg' : 'errorIcon.svg';
 
     return <div className={styles.containerWrapper}>
         <div className={styles.container}>
