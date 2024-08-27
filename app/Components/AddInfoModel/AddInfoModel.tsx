@@ -13,8 +13,7 @@ interface FormValues {
 }
 
 interface Props {
-    onSumbitClick?: () => void;
-    onCancelClick?: () => void;
+    onCancelClick: () => void;
     isAlbumInfo?: boolean;
 }
 
@@ -22,7 +21,7 @@ const AddInfoModel = (props: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
-    const onSubmit = (data: any) => {
+    const onSubmit: SubmitHandler<FormValues> = data => {
         console.log("Valid Date:", data.date);
         alert('Rame')
     }
