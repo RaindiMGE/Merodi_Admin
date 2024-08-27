@@ -10,6 +10,7 @@ interface Props {
 }
 
 const SecondaryButton = (props: Props) => {
+    return <button
         disabled={props.disabled}
         type='button'
         className={`${styles.button} ${props.isBlue ? styles.blueButton : styles.grayButton}`}
