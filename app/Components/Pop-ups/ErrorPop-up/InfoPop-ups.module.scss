@@ -1,0 +1,21 @@
+.containerWrapper {
+    display: flex;
+
+    .container {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        gap: 8px;
+        border-radius: 8px;
+        background: #FFF;
+        box-shadow: 0px 4px 24px 0px #00000040;
+
+
+        .message {
+            color: #2E3238;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+        }
+    }
+}
