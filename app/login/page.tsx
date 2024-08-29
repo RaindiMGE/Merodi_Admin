@@ -4,11 +4,7 @@ import Image from 'next/image';
 import styles from './page.module.scss';
 import Input from '../Components/InputComponent/InputComponent';
 import { useForm, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
-
-interface Login {
-    email: string;
-    password: string;
-}
+import { Login } from '../interfaces/interface';
 
 const LogIn = () => {
 
