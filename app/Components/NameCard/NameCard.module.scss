@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .name {
+        color: #454C54;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+    }
+}
