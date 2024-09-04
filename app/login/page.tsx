@@ -3,15 +3,14 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Input from '../Components/InputComponent/InputComponent';
-import { useForm, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
+import { SubmitHandler, useForm, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 import { Login } from '../interfaces/interface';
 
 const LogIn = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<Login>()
 
-    const onSubmit = (data: any) => {
-        console.log('rame')
+    const onSubmit: SubmitHandler<Login> = data => {
         alert()
     }
 
