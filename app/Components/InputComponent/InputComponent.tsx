@@ -8,7 +8,7 @@ import Icon from '../IconComponent/Icon';
 interface Props {
     placeholder: string;
     isForPassword?: boolean;
-    error: FieldError;
+    error: FieldError | undefined;
     register: UseFormRegisterReturn;
     isLoginInput?: boolean;
 }
