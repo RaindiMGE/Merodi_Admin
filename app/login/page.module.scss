@@ -1,0 +1,90 @@
+.container {
+    max-width: 1440px;
+    width: 100%;
+    background-color: #fff;
+    height: 100%;
+    display: flex;
+
+    .imgWrapper {
+        max-width: 720px;
+        width: 100%;
+        height: 100vh;
+        position: relative;
+    }
+
+    .inputsWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 720px;
+        width: 100%;
+        padding: 0 104px;
+
+        .inputsContent {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 32px;
+            max-width: 512px;
+            width: 100%;
+
+            .heading {
+                color: #2E3238;
+                font-size: 32px;
+                font-weight: 600;
+                line-height: 40px;
+            }
+
+            .inputsBox {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                width: 100%;
+
+                .emailWrapper,
+                .passwordWrapper {
+                    max-width: 512px;
+                    width: 100%;
+                }
+
+                .passwordWrapper {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 8px;
+
+                    .checkBox {
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        color: #67727E;
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 18px;
+
+                        .input {
+                            all: unset;
+                            margin: 4px;
+                            width: 18px;
+                            height: 18px;
+                            background-image: url('/icons/Shape.svg');
+
+                            &:checked {
+                                width: 18px;
+                                height: 18px;
+                                background-image: url('/icons/afterCheckIcon.svg');
+                            }
+                        }
+
+                        .label {
+                            color: #505862;
+                            font-size: 14px;
+                            font-weight: 500;
+                            line-height: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
