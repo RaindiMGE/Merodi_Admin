@@ -1,7 +1,7 @@
 'use client'
 
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
-import styles from './AddArtist.module.scss';
+import styles from './AddInfoModel.module.scss';
 import AddImageModel from './AddImageModel/AddImageModel';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -72,11 +72,11 @@ const AddInfoModel = (props: Props) => {
                         })} />
                         {errors.artistName && <span className={styles.error}>{errors.artistName?.message}</span>}
                     </div>
-                </div>
-                <div className={`${props.isAlbumInfo ? styles.addDateBox : styles.addTextBox}`}>
-                    <label className={styles.label}>{props.isAlbumInfo ? 'Date of release' : 'Biography'}</label>
-                    {props.isAlbumInfo
-                        ? <div className={styles.inputWrapper}>
+                </div> 
+                {props.isAlbumInfo
+                    && <div className={styles.addDateBox}>
+                    <label className={styles.label}>Date of release</label>
+                    <div className={styles.inputWrapper}>
                             <input type='text' className={styles.dateInput} {...register('date', {
                                 required: {
                                     value: true,
@@ -90,16 +90,19 @@ const AddInfoModel = (props: Props) => {
                             })} />
                             {errors.date && <span className={styles.error}>{errors.date?.message}</span>}
                         </div>
-                        : <div className={styles.inputWrapper}>
-                            <textarea className={styles.textArea} {...register('biography', {
-                                maxLength: {
-                                    value: 1000,
-                                    message: 'Biography should not exceed 1000 characters'
-                                }
-                            })}></textarea>
-                            {errors.biography && <span className={styles.error}>{errors.biography?.message}</span>}
-                        </div>
-                    }
+                    
+                </div>}
+                <div className={styles.addTextBox}>
+                    <label className={styles.label}>{props.isAlbumInfo ? 'Description' : 'Biography'}</label>
+                    <div className={styles.inputWrapper}>
+                        <textarea className={styles.textArea} {...register('biography', {
+                            maxLength: {
+                                value: 1000,
+                                message: `${props.isAlbumInfo ? 'Description' : 'Biography'} should not exceed 1000 characters`
+                            }
+                        })}></textarea>
+                        {errors.biography && <span className={styles.error}>{errors.biography?.message}</span>}
+                    </div>
                 </div>
                 <div className={styles.addImageBox}>
                     <label className={styles.label} >{props.isAlbumInfo ? 'Cover' : 'Profile'} Photo</label>
