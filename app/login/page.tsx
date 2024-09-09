@@ -5,6 +5,7 @@ import styles from './page.module.scss';
 import Input from '../Components/InputComponent/InputComponent';
 import { SubmitHandler, useForm, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 import { Login } from '../interfaces/interface';
+import Button from '../Components/Buttons/PrimaryButton/primaryButtons';
 
 const LogIn = () => {
 
@@ -55,7 +56,7 @@ const LogIn = () => {
                             <label htmlFor="check" className={styles.label}>Remember me</label>
                         </div>
                     </div>
-                    <button>Submit</button>
+                    <Button isLarge title='Login' onClick={handleSubmit(onSubmit)} />
                 </form>
             </div>
         </div>
