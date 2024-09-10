@@ -1,0 +1,15 @@
+.container {
+
+    .table {
+        max-width: 1104px;
+        align-items: flex-start;
+
+        .artistNameCard {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 296px;
+            width: 100%;
+        }
+    }
+}
