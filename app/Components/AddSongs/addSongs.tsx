@@ -12,7 +12,7 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Submit button clicked");
+    
     try {
       const response = await fetch("/api/add-song", {
         method: "POST",
@@ -31,7 +31,7 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId }) => {
   };
 
   const handleCancel = () => {
-    console.log("Cancel button clicked");
+    
     setSongTitle("");
     setError(null);
   };
