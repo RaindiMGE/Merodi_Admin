@@ -27,7 +27,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ userId }) => {
   return (
     <div className={styles.changePassword}>
       <h2 className={styles.changeMainPassword}>Change Password</h2>
-      <form onSubmit={handleSubmit}>
+      <form
+      className={styles.formGap} 
+      onSubmit={handleSubmit}>
         <label>
           <input
             className={styles.passwordHolder}
@@ -37,7 +39,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ userId }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-
         <label>
           <input
             className={styles.confirmPassword}
@@ -47,7 +48,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ userId }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <br />
         <div className={styles.endButtons}>
           <button className={styles.cancel} type="button">
             Cancel
