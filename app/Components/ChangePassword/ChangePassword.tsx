@@ -37,7 +37,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ userId }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <br />
+        
         <label>
           <input
             className={styles.confirmPassword}
@@ -47,7 +47,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ userId }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <br />
         <div className={styles.endButtons}>
           <button className={styles.cancel} type="button">
             Cancel
