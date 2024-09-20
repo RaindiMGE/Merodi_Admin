@@ -11,3 +11,10 @@ body {
   overflow-x: hidden;
   background: #F4F5F6;
 }
+body{
+  display: flex;
+  justify-content: flex-end;
+}
+.contantWraper{
+  width: calc(100% - 272px);
+}

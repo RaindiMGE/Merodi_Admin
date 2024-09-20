@@ -1,4 +1,4 @@
-'use client'
+ 'use client'
 
 import Image from 'next/image';
 import styles from './NavBar.module.scss';
@@ -18,7 +18,7 @@ interface Props {
     activePageId: number
 }
 
-const NavBar = ({ pages, activePageId }: Props) => {
+const NavBar = ({ pages , activePageId }: Props) => {
     return <nav className={styles.nav}>
         {pages.map((page: Page) => (
             <Link href={page.href} className={styles.link}>
