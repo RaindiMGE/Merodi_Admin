@@ -1,22 +1,20 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import styles from './page.module.scss';
+import styles from "./page.module.scss";
 import AntTable from "../Components/AntTable/Table";
 import SearchComponent from "../Components/SearchComponent/SearchComponent";
 import Button from "../Components/Buttons/PrimaryButton/primaryButtons";
-
-
 
 const Artist = () => {
   const [userId, setUserId] = useState<null | Number>(null);
   return (
     <div>
-       <div className={styles.maintwo}>
-        <SearchComponent/>
-        <Button title={"Add Artist"}/>
-        </div> 
+      <div className={styles.maintwo}>
+        <SearchComponent />
+        <Button title={"Add Artist"} />
+      </div>
       <AntTable
         columns={[
           {
@@ -29,15 +27,20 @@ const Artist = () => {
           },
           {
             title: "Date added",
-            dataIndex: "dateadded"
+            dataIndex: "dateadded",
           },
         ]}
         dataSource={[
           {
             key: 1,
-            artistName: <div className={styles.imgdiv} > <img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                {" "}
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -62,10 +65,14 @@ const Artist = () => {
           },
           {
             key: 2,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
-            
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
+
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -90,9 +97,13 @@ const Artist = () => {
           },
           {
             key: 3,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -117,9 +128,13 @@ const Artist = () => {
           },
           {
             key: 4,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -144,9 +159,13 @@ const Artist = () => {
           },
           {
             key: 5,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -171,9 +190,13 @@ const Artist = () => {
           },
           {
             key: 6,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -198,9 +221,13 @@ const Artist = () => {
           },
           {
             key: 7,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -225,9 +252,13 @@ const Artist = () => {
           },
           {
             key: 8,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -252,9 +283,13 @@ const Artist = () => {
           },
           {
             key: 9,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -280,9 +315,13 @@ const Artist = () => {
 
           {
             key: 10,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -307,9 +346,13 @@ const Artist = () => {
           },
           {
             key: 11,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -334,9 +377,13 @@ const Artist = () => {
           },
           {
             key: 12,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -361,9 +408,13 @@ const Artist = () => {
           },
           {
             key: 13,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -388,9 +439,13 @@ const Artist = () => {
           },
           {
             key: 14,
-            artistName: <div className={styles.imgdiv}><img src="/icons/ceotwo.svg" alt="" /> Cleo Col </div>,
-            biography: 'Cleo Sol is a British singer-songwriter known for...',
-            dateadded: '09/04/15',
+            artistName: (
+              <div className={styles.imgdiv}>
+                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+              </div>
+            ),
+            biography: "Cleo Sol is a British singer-songwriter known for...",
+            dateadded: "09/04/15",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
