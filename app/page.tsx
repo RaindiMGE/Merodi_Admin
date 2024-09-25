@@ -7,7 +7,10 @@ import PopUps from  './Components/Pop-ups/MainPop-up/MainPop-up'
 import { useState } from 'react';
 
 
+import AddSongs from './Components/AddSongs/addSongs';
+import ChangePassword from './Components/ChangePassword/ChangePassword';
 
+import styles from './page.module.scss';
 export default function Home() {
 
 const [userId , setUserId] = useState<null|Number>(null);
@@ -122,6 +125,8 @@ const [userId , setUserId] = useState<null|Number>(null);
         }/>
       </div>
       </div>
+
+      <AddSongs userId={'add songs'}/>
     </main>
   );
 }

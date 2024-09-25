@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AsideManu from "./Components/AsideMenu/Aside"
+import Aside from "./Components/AsideMenu/Aside";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"></link>
       </head>
       <body className={inter.className}>
-          <AsideManu/>
+          <Aside/>
         <div className='contantWraper'>
         {children}
         </div>
