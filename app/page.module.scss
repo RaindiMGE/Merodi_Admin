@@ -1,0 +1,23 @@
+
+.search{
+    display: flex;
+    height: 70px;
+    align-items: flex-end;
+    
+    
+}
+.PopUps{
+    max-width: 1148px;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background: #00000040
+    
+}
+
+
+

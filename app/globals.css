@@ -19,3 +19,10 @@ body {
 .contantWraper {
   width: calc(100% - 272px);
 }
+body{
+  display: flex;
+  justify-content: flex-end;
+}
+.contantWraper{
+  width: calc(100% - 272px);
+}
