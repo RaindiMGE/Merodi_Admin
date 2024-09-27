@@ -3,31 +3,32 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./page.module.scss";
-import AntTable from "../Components/AntTable/Table";
-import SearchComponent from "../Components/SearchComponent/SearchComponent";
-import Button from "../Components/Buttons/PrimaryButton/primaryButtons";
+import SearchComponent from "@/app/Components/SearchComponent/SearchComponent";
+import AntTable from "@/app/Components/AntTable/Table";
+import SecondaryButton from "../Components/Buttons/SecondaryButton/SecondaryButton";
 
-const Artist = () => {
+const Album = () => {
   const [userId, setUserId] = useState<null | Number>(null);
   return (
     <div>
       <div className={styles.maintwo}>
         <SearchComponent />
-        <Button title={"Add Artist"} />
+
+        <SecondaryButton title={"Add Album"} />
       </div>
       <AntTable
         columns={[
-          {
-            title: "Album Name",
-            dataIndex: "albumName",
-          },
           {
             title: "Artist Name",
             dataIndex: "artistName",
           },
           {
-            title: "Date added",
-            dataIndex: "dateadded",
+            title: "Biography",
+            dataIndex: "biography",
+          },
+          {
+            title: "Date of release",
+            dataIndex: "dateofrelease",
           },
         ]}
         dataSource={[
@@ -36,11 +37,11 @@ const Artist = () => {
             artistName: (
               <div className={styles.imgdiv}>
                 {" "}
-                <img src="/icons/ceotwo.svg" alt="" /> {" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -67,11 +68,11 @@ const Artist = () => {
             key: 2,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
 
             edit: (
               <Image
@@ -99,11 +100,11 @@ const Artist = () => {
             key: 3,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/Starboy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -130,11 +131,11 @@ const Artist = () => {
             key: 4,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
-            biography: "Cleo Sol is a British singer-songwriter known for...",
-            dateadded: "09/04/15",
+            biography: "The Weeknd",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -161,11 +162,11 @@ const Artist = () => {
             key: 5,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
-            biography: "Cleo Sol is a British singer-songwriter known for...",
-            dateadded: "09/04/15",
+            biography: "The Weeknd",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -192,11 +193,11 @@ const Artist = () => {
             key: 6,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
-            biography: "Cleo Sol is a British singer-songwriter known for...",
-            dateadded: "09/04/15",
+            biography: "The Weeknd",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -223,11 +224,11 @@ const Artist = () => {
             key: 7,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
-            biography: "Cleo Sol is a British singer-songwriter known for...",
-            dateadded: "09/04/15",
+            biography: "The Weeknd",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -254,11 +255,11 @@ const Artist = () => {
             key: 8,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
-            biography: "Cleo Sol is a British singer-songwriter known for...",
-            dateadded: "09/04/15",
+            biography: "The Weeknd",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -285,11 +286,11 @@ const Artist = () => {
             key: 9,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -317,11 +318,11 @@ const Artist = () => {
             key: 10,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
-            biography: "Cleo Sol is a British singer-songwriter known for...",
-            dateadded: "09/04/15",
+            biography: "The Weeknd",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -348,11 +349,11 @@ const Artist = () => {
             key: 11,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -379,11 +380,11 @@ const Artist = () => {
             key: 12,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -410,11 +411,11 @@ const Artist = () => {
             key: 13,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -441,11 +442,11 @@ const Artist = () => {
             key: 14,
             artistName: (
               <div className={styles.imgdiv}>
-                <img src="/icons/ceotwo.svg" alt="" /> Cleo Col{" "}
+                <img src="/icons/StarBoy.svg" alt="" /> Starboy{" "}
               </div>
             ),
             biography: "The Weeknd",
-            dateadded: "09/04/15",
+            dateofrelease: "25/10/16",
             edit: (
               <Image
                 src={"/icons/editIcon.svg"}
@@ -474,4 +475,4 @@ const Artist = () => {
   );
 };
 
-export default Artist;
+export default Album;

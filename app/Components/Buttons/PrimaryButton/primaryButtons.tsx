@@ -5,10 +5,11 @@ interface buttonProps {
   isLarge?: boolean;
   title: string;
   onClick?: () => void;
+  
 }
-const Button = ({ isLarge, title }: buttonProps) => {
-  return (
-    <button className={isLarge ? styles.bigButton : styles.mainButton}>
+const Button = ({ isLarge, title, onClick }: buttonProps) => {
+  return ( 
+    <button onClick={onClick}  className={isLarge ? styles.bigButton : styles.mainButton }>
       {!isLarge && (
         <svg
           className={styles.imgTag}
