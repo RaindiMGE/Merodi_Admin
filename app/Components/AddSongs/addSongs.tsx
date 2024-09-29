@@ -4,9 +4,11 @@ import UploadButton from "../Buttons/UploadButton/UploadButton";
 
 interface AddSongsProps {
   userId: string;
+  onCancelClick?:()=>void;
 }
 
-const AddSongs: React.FC<AddSongsProps> = ({ userId }) => {
+
+const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick }) => {
   const [songTitle, setSongTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +37,7 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId }) => {
     setSongTitle("");
     setError(null);
   };
-
+   
   return (
     <div className={styles.mainDiv}>
       <h2 className={styles.addSong}>Add Song</h2>
@@ -53,7 +55,7 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId }) => {
         <UploadButton />
 
         <div className={styles.twoButtons}>
-          <button className={styles.cancel} type="button" onClick={handleCancel}>
+          <button className={styles.cancel} type="button" onClick={onCancelClick}>
             Cancel
           </button>
           <button className={styles.submit} type="submit">
