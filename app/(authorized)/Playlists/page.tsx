@@ -14,27 +14,6 @@ import { message } from 'antd';
 
 export default function Home() {
   const [userId , setUserId] = useState<null|Number>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [errorType, setErrorType] = useState<'success' | 'error' | null>(null);
-
-  const deletePlaylist = async () => {
-    if (userId === null) return; 
-
-    try {
-      const response = await axios.delete(`https://api.example.com/playlists/${userId}`);
-      
-      if (response.status === 200) {
-        setErrorMessage('Playlist deleted successfully');
-        setErrorType('success');
-      }
-    } catch (error) {
-      setErrorMessage('Operation failed. Please try again');
-      setErrorType('error');
-      console.error('Error deleting playlist:', error);
-    } finally {
-      setUserId(null);
-    }
-  };
 
   return (
     <main>
@@ -332,9 +311,6 @@ export default function Home() {
           ]
         }/>
       </div>
-      {errorMessage && (
-        <ErrorPopUp message={errorMessage} type={errorType} />
-      )}
     </main>
   );
     
