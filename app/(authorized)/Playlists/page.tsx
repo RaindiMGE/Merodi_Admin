@@ -15,7 +15,7 @@ import { message } from 'antd';
 export default function Home() {
   const [userId , setUserId] = useState<null|Number>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [errorType, setErrorType] = useState<'string' | 'success' | 'error'>('string');
+  const [errorType, setErrorType] = useState<'success' | 'error' | null>(null);
 
   const deletePlaylist = async () => {
     if (userId === null) return; 
