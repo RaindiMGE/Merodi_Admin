@@ -123,28 +123,28 @@
 @keyframes ErrorPopUp {
     0% {
         height: 0;
-        width: 500px;
+        width: 340px;
         top: -10px;
         left: calc((100% - 340px) / 2);
     }
 
-    40% {
+    20% {
         height: 70px;
-        width: 500px;
+        width: 340px;
         top: 70px;
         left: calc((100% - 340px) / 2);
     }
 
-    60% {
+    80% {
         height: 70px;
-        width: 500px;
+        width: 340px;
         top: 70px;
         left: calc((100% - 340px) / 2);
     }
 
     100% {
         height: 0;
-        width: 500px;
+        width: 340px;
         top: -10px;
         left: calc((100% - 340px) / 2);
         padding-bottom: 0;
@@ -156,7 +156,7 @@
     position: fixed;
     display: flex;
     align-items: flex-end;
-    animation: ErrorPopUp 7s forwards;
+    animation: ErrorPopUp 4s forwards;
     z-index: 5;
     padding: 10px;
 }

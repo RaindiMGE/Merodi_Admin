@@ -6,6 +6,7 @@ import { BaseSyntheticEvent, Suspense, useEffect, useState } from "react";
 import styles from './page.module.scss';
 import axios from "axios";
 import { getCookie } from "@/helpers/cookies";
+import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 
 const AddArtist = () => {
     return <Suspense>
@@ -27,6 +28,9 @@ const AddArtistContent = () => {
     const [id, setId] = useState<null | string>(null);
     const token = getCookie('token')
     const [artistInfo, setArtistInfo] = useState<ArtistInfo>()
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [errorType, setErrorType] = useState<'success' | 'error'>();
+    const [showErrorPopUp, setShowErrorPopUp] = useState(false)
 
     useEffect(() => {
         setIsMounted(true)
@@ -39,8 +43,8 @@ const AddArtistContent = () => {
     }, [searchParams, isMounted])
 
     const getArtistInfo = async () => {
-        try{
-            const response = await axios.get(`http://localhost:3000/api/artists/${id}`, {
+        try {
+            const response = await axios.get(`https://merodibackend-2.onrender.com/author/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -58,6 +62,8 @@ const AddArtistContent = () => {
         }
     }, [id])
 
+    console.log(artistInfo);
+
     const editedInfoUpload = (data: any) => {
         const formData = new FormData()
         formData.append('firstName', data.firstName)
@@ -70,15 +76,16 @@ const AddArtistContent = () => {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then((res) => {
-            alert('Artist Updated');
-        })
-        .catch((err) => {
-            console.error(err);
-        })
+            .then((res) => {
+                alert('Artist Updated');
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     }
 
     const newInfoUpload = (data: any) => {
+        setShowErrorPopUp(false);
         const formData = new FormData()
         formData.append('firstName', data.firstName)
         formData.append('lastName', data.lastName)
@@ -97,12 +104,17 @@ const AddArtistContent = () => {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then((res) => {
-            alert('Artist Added');
-        })
-        .catch((err) => {
-            console.error(err);
-        })
+            .then((res) => {
+                setErrorMessage(`Artist Added`)
+                setErrorType('success')
+            })
+            .catch((err) => {
+                setErrorMessage('Operation failed. Please try again')
+                setErrorType('error')
+            })
+            .finally(() => {
+                setShowErrorPopUp(true)
+            })
     }
 
     const onSubmitClick = (data: FormValues) => {
@@ -113,7 +125,7 @@ const AddArtistContent = () => {
             biography: data.biography,
             imageUrl: data.file
         }
-        if(id) {
+        if (id) {
             editedInfoUpload(newData);
         } else {
             newInfoUpload(newData);
@@ -124,12 +136,20 @@ const AddArtistContent = () => {
         router.push('/Artist')
     }
     return (
-        <div className={styles.container}>
-            Taylor Swift__17 <br/>
-            Taylor Swift 1 is an American singer-songwriter, born on December 13, 1989, in Reading, Pennsylvania. She is known for her narrative songwriting, which often reflects her personal life. Swift's musical style has evolved from country to pop and indie/folk over the years, contributing to her widespread popularity and critical acclaim
-            
-            <AddInfoModel onCancelClick={onCancelClick} onSubmit={onSubmitClick} />
-        </div>
+        <>
+            {showErrorPopUp && <div className={styles.errorPopUp}>
+                <InfoPopUp message={errorMessage} type={errorType} />
+            </div>}
+            <div className={styles.container}>
+                Taylor Swift__17 <br />
+                Taylor Swift 1 is an American singer-songwriter, born on December 13, 1989, in Reading, Pennsylvania. She is known for her narrative songwriting, which often reflects her personal life. Swift's musical style has evolved from country to pop and indie/folk over the years, contributing to her widespread popularity and critical acclaim
+
+                <AddInfoModel data={{
+                    artistName: 'Taylor Swift',
+                    biography: ''
+                }} onCancelClick={onCancelClick} onSubmit={onSubmitClick} />
+            </div>
+        </>
     );
 }
 

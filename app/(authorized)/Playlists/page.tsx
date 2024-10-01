@@ -65,7 +65,7 @@ export default function Home() {
   }, [])
 
   const deletePlaylist = (id: number) => {
-    axios.delete(`https://merodibackend-2.onrender.com/playlists/${id}`, {
+    axios.delete(`https://merodibackend-2.onrender.com/playlist/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
