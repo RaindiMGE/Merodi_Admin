@@ -5,7 +5,7 @@ interface buttonProps {
   isLarge?: boolean;
   title: string;
   onClick?: () => void;
-  
+    
 }
 const Button = ({ isLarge, title, onClick }: buttonProps) => {
   return ( 

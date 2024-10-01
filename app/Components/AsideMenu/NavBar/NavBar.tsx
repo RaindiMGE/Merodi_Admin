@@ -20,8 +20,8 @@ interface Props {
 
 const NavBar = ({ pages , activePageId }: Props) => {
     return <nav className={styles.nav}>
-        {pages.map((page: Page) => (
-            <Link href={page.href} className={styles.link}>
+        {pages.map((page: Page, index) => (
+            <Link href={page.href} className={styles.link} key={index + 1}>
                 <div key={page.id} className={`${styles.page} ${activePageId == page.id ? styles.active : styles.default}`} onClick={page.onClick} >
                     <Image src={`/icons/${activePageId == page.id ? `${page.clickedIcon}` : `${page.icon}`}`} alt='Icon' width={24} height={24} />
                     {page.title}
