@@ -5,7 +5,7 @@ import styles from './InfoPop-ups.module.scss';
 
 interface Props {
     message: string;
-    type: 'success' | 'error';
+    type: 'success' | 'error' | undefined;
 }
 
 const InfoPopUp = (props: Props) => {
