@@ -2,7 +2,7 @@
 
 import { Domain } from "domain";
 
-export function setCookies(name: string, value: string, day: number) {
+export function setCookies(name: string, value: string, day: number):void  {
     let expires = "";
     if (day) {
         const date = new Date()

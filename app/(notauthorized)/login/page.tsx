@@ -3,31 +3,19 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Input from '../../Components/InputComponent/InputComponent';
-import { SubmitHandler, useForm, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Login } from '../../interfaces/interface';
 import Button from '../../Components/Buttons/PrimaryButton/primaryButtons';
-import router from 'next/router';
 import axios from 'axios';
-import { error } from 'console';
-import { useCookie } from '@/helpers/cookies';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 
-const LogIn = () => {
+export default () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<Login>()
 
     const onSubmit: SubmitHandler<Login> = data => {
         axios.post('https://merodibackend-2.onrender.com/auth/login', data)
-            .then((res) => {
-                setCookies('token', res.data, 60)
-                router.push('/')
-            })
-            .catch((err) => {
-                alert('Error');
-            })
+            
     }
 
     return <div className={styles.container}>
@@ -76,10 +64,4 @@ const LogIn = () => {
             </div>
         </div>
     </div>
-}
-
-export default LogIn;
-
-function setCookies(arg0: string, data: any, arg2: number) {
-    throw new Error('Function not implemented.');
 }
