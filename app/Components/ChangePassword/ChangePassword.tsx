@@ -1,62 +1,63 @@
+'use client'
+
 import React, { useState } from "react";
 import styles from "./ChangePassword.module.scss";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Input from "../InputComponent/InputComponent";
+import SecondaryButton from "../Buttons/SecondaryButton/SecondaryButton";
 
 interface ChangePasswordProps {
-  userId: string;
+  userId: number;
+  onCancelClick: () => void;
+  onSubmitClick: (data: Input, userId: number) => void;
 }
 
-const ChangePassword: React.FC<ChangePasswordProps> = ({ userId }) => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+export interface Input {
+  password: string;
+  confirmPassword: string;
+}
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await fetch("/api/change-password", {
-        method: "POST",
-        headers: { "Content-Type": "application" },
-        body: JSON.stringify({ userId, password }),
-      });
-      setError(response.ok ? null : "Password can`t be changed");
-    } catch {
-      setError("error");
-    }
+const ChangePassword: React.FC<ChangePasswordProps> = ({ userId, onCancelClick, onSubmitClick }) => {
+
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm<Input>()
+
+  const onSubmit: SubmitHandler<Input> = data => {
+    onSubmitClick(data, userId);
   };
 
   return (
     <div className={styles.changePassword}>
       <h2 className={styles.changeMainPassword}>Change Password</h2>
-      <form
-      className={styles.formGap} 
-      onSubmit={handleSubmit}>
-        <label>
-          <input
-            className={styles.passwordHolder}
-            type="password"
-            placeholder="New Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <label>
-          <input
-            className={styles.confirmPassword}
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </label>
+      <form className={styles.formGap} onSubmit={handleSubmit(onSubmit)}>
+        <Input register={{
+          ...register("password", {
+            required: {
+              value: true,
+              message: "Password is required",
+            },
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters long",
+            },
+            pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+              message: 'Password must contain at least one lowercase letter, one uppercase letter, one digit and one simbol'
+            }
+          })
+        }} error={errors.password} isForPassword placeholder="New Password" />
+        <Input register={{
+          ...register("confirmPassword", {
+            required: {
+              value: true,
+              message: "Confirm Password is required",
+            },
+            validate: (value: any) => value === getValues('password') || 'The passwords do not match',
+          })
+        }} error={errors.confirmPassword} isForPassword placeholder="Confirm Password" />
         <div className={styles.endButtons}>
-          <button className={styles.cancel} type="button">
-            Cancel
-          </button>
-          <button className={styles.submit} type="submit">
-            Submit
-          </button>
+          <SecondaryButton title={"Cancel"} onClick={onCancelClick} type="button" />
+          <SecondaryButton title="Submit" onClick={handleSubmit(onSubmit)} type="submit" isBlue />
         </div>
-        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );
