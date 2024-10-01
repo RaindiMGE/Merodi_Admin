@@ -29,13 +29,16 @@ export interface PlaylistInfo {
 }
 
 export default function Home() {
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  onst [errorMessage, setErrorMessage] = useState<string>('');
   const [errorType, setErrorType] = useState<'success' | 'error'>();
   const [showErrorPopUp, setShowErrorPopUp] = useState(false)
   const [playlists, setPlaylists] = useState<PlaylistInfo[]>([])
   const [showPopUp, setShowPopUp] = useState(false)
   const [playlistId, setPlaylistId] = useState(0);
   const token = getCookie('token');
+
+  const deletePlaylist = async () => {
+ 
 
   const getPlaylistData = async () => {
     try {
