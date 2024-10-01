@@ -13,8 +13,11 @@
   align-items: center;
   gap: 8px;
   border-radius: 8px;
+  border: 1px solid #F6F9FB;
+  background: #FFF;
+
   &:hover {
-    background-color: #9b9b9b;
+    background-color: #D6D6D6;
   }
 }
 
@@ -22,6 +25,7 @@
   &:active {
     background-color: #0c5eb6;
   }
+
   border: 0px;
   display: flex;
   width: 100%;

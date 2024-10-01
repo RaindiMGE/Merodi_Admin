@@ -2,7 +2,7 @@
 
 import { Table, TableColumnsType, TableProps } from 'antd';
 import styles from './Table.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { Key, useEffect, useState } from 'react';
 import Image from 'next/image';
 import './Table.css'
 
@@ -14,6 +14,7 @@ interface Props {
     isUserInfo?: boolean;
     columns: TableColumnsType;
     dataSource: DataType[];
+    onChoosenItemsClick?: (choosenItemsKeys: React.Key[],) => void;
 };
 
 const AntTable = (props: Props) => {
@@ -22,6 +23,14 @@ const AntTable = (props: Props) => {
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
+
+    const onChoosenItemsAction = () => {
+        setSelectedRowKeys([]);
+        if (props.onChoosenItemsClick) {
+            props.onChoosenItemsClick(selectedRowKeys)
+        }
+    }
+
     const rowSelection: TableRowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
@@ -30,11 +39,11 @@ const AntTable = (props: Props) => {
         item
     ));
     columns.push(
-        { title: '', dataIndex: 'edit', width: 24, },
+        { title: '', dataIndex: 'edit', width: 16, },
         {
             title: props.isUserInfo ?
-                <Image src={'/icons/blockIcon.svg'} alt='trash' width={24} height={24} /> :
-                <Image src={'/icons/trash.svg'} alt='trash' width={24} height={24} />, dataIndex: 'action', width: 24
+                <Image src={'/icons/blockIcon.svg'} alt='trash' width={24} height={24} onClick={onChoosenItemsAction} /> :
+                <Image src={'/icons/trash.svg'} alt='trash' width={24} height={24} onClick={onChoosenItemsAction} />, dataIndex: 'action', width: 24
         },
     )
 

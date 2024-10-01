@@ -5,10 +5,14 @@ import styles from './Aside.module.scss';
 import Image from 'next/image';
 import NavBar from './NavBar/NavBar';
 import { useState } from 'react';
+import { deleteCookie } from '@/helpers/cookies';
 
 const Aside = () => {
 
     const [activePageId, setActvePageId] = useState(1);
+    const onLogoutCLick = () => {
+        deleteCookie('token')
+    }
 
     return <aside className={styles.container}>
         <Link href={'/'} ><Image src={'/Logo.svg'} alt='Logo Main' width={130} height={48} /></Link>
@@ -28,7 +32,7 @@ const Aside = () => {
                     icon: 'defaultArtistIcon.svg',
                     clickedIcon: 'activeArtistIcon.svg',
                     onClick: () => setActvePageId(2),
-                    href: '/'
+                    href: '/Artist'
                 },
                 {
                     id: 3,
@@ -36,7 +40,7 @@ const Aside = () => {
                     icon: 'defaultAlbumIcon.svg',
                     clickedIcon: 'activeAlbumIcon.svg',
                     onClick: () => setActvePageId(3),
-                    href: '/'
+                    href: '/Album'
                 },
                 {
                     id: 4,
@@ -44,10 +48,10 @@ const Aside = () => {
                     icon: 'defaultPlaylistIcon.svg',
                     clickedIcon: 'activePlaylistIcon.svg',
                     onClick: () => setActvePageId(4),
-                    href: '/'
+                    href: '/Playlists'
                 },
             ]} activePageId={activePageId} />
-            <Link href={'/login'} className={styles.logoutLink}>
+            <Link href={'/login'} className={styles.logoutLink} onClick={onLogoutCLick}>
                 <Image src={'/icons/logoutIcon.svg'} alt='logout icon' width={24} height={24} />
                 Log out
             </Link>

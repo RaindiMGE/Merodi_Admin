@@ -2,23 +2,64 @@
 
 import styles from './page.module.scss';
 import Search from "../../Components/SearchComponent/SearchComponent"
-import PopUps from  '../../Components/Pop-ups/MainPop-up/MainPop-up';
-import { useState } from 'react';
+import PopUps from '../../Components/Pop-ups/MainPop-up/MainPop-up';
+import { useEffect, useState } from 'react';
 import AntTable from '../../Components/AntTable/Table';
-import  Image  from 'next/image';
+import Image from 'next/image';
 import { Span } from 'next/dist/trace';
 import ErrorPopUp from "../../Components/Pop-ups/ErrorPop-up/InfoPop-ups"
 import axios from 'axios';
 import { message } from 'antd';
+import { getCookie } from '@/helpers/cookies';
+import { jwtDecode } from 'jwt-decode';
+import { findPlaylistTitle } from '@/helpers/dataAction';
 
+export interface PlaylistInfo {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  musics: {
+    id: number;
+    name: string;
+    duration: number;
+    imageUrl: string;
+    albumId: number;
+  }[]
+}
 
 export default function Home() {
   const [userId , setUserId] = useState<null|Number>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorType, setErrorType] = useState<'success' | 'error' | null>(null);
+
+  const deletePlaylist = async () => {
+    if (userId === null) return; 
+
+    try {
+      const response = await axios.delete(`https://api.example.com/playlists/${userId}`);
+      
+      if (response.status === 200) {
+        setErrorMessage('Playlist deleted successfully');
+        setErrorType('success');
+      }
+    } catch (error) {
+      setErrorMessage('Operation failed. Please try again');
+      setErrorType('error');
+      console.error('Error deleting playlist:', error);
+    } finally {
+      setUserId(null);
+    }
+  };
 
   return (
-    <main>
-        {userId && <div className={styles.PopUps}>
-        <PopUps title={'Delete Playlist'} message={'Are you sure you want to delete'} target={'Fav Songs?'} buttonTitle={'Delete'} onCancelClick={()  => setUserId(null)} />
+    <>
+      {showErrorPopUp && <div className={styles.errorPopUp}>
+        <ErrorPopUp message={errorMessage} type={errorType} />
+      </div>}
+      <div className={showPopUp ? styles.popUpWrapper : styles.popUp}>
+        <div className={showPopUp ? styles.showPopUp : styles.hiddePopUp}>
+          <PopUps id={playlistId} title={'Delete Playlist'} message={'Are you sure you want to delete'} target={findPlaylistTitle(playlistId, playlists)} buttonTitle={'Delete'} onCancelClick={() => setShowPopUp(false)} onSubmitClick={deletePlaylist} />
         </div>
       }
       <div className={styles.searchh} >
@@ -311,8 +352,10 @@ export default function Home() {
           ]
         }/>
       </div>
+      {errorMessage && (
+        <ErrorPopUp message={errorMessage} type={errorType} />
+      )}
     </main>
   );
-    
-}
-
+  }
+  

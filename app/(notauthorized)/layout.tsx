@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-
-import Login from "./login/page";
-
+import './globals.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +16,7 @@ export default function NotAuthorizeLayout({ children }: { children: React.React
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"></link>
       </head>
       <body className={inter.className}>
-            {children}
+          {children}
       </body>
     </html>
   );

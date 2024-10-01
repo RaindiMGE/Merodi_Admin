@@ -16,7 +16,8 @@ const [userId , setUserId] = useState<null|Number>(null);
   return (
     <main>
        {userId && <div className={styles.PopUps}>
-        <PopUps title={'Block User'} message={'Are you sure you want to block'} target={'MakaSwift@gmail.com'} buttonTitle={'Block'} onCancelClick={() => setUserId(null)} />
+        <PopUps title={'Block User'} message={'Are you sure you want to block'} target={'MakaSwift@gmail.com'} buttonTitle={'Block'} onCancelClick={() => setUserId(null)} id={0} onSubmitClick={function (id: number): void {
+        } } />
         </div>
       }
       <div>

@@ -1,0 +1,95 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 32px 32px 16px;
+    width: 100%;
+
+    .headerBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 3;
+    }
+
+    .artistBox {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .artistImage {
+            border-radius: 24px;
+        }
+    }
+
+    .biographyBox {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@keyframes showBlockPopUp {
+    0% {
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+    }
+
+    100% {
+        top: calc((100% - 224px) / 2);
+        right: calc((100% - 490px) / 2);
+        width: 490px;
+        height: 224px;
+    }
+}
+
+@keyframes hiddeBlockPopUp {
+    0% {
+        top: calc((100% - 224px) / 2);
+        right: calc((100% - 490px) / 2);
+        width: 490px;
+        height: 224px;
+    }
+
+    100% {
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+    }
+}
+
+.showPopUp {
+    animation: showBlockPopUp 1s forwards;
+    overflow: hidden;
+    position: absolute;
+    z-index: 3;
+}
+
+.hiddePopUp {
+    position: absolute;
+    z-index: 3;
+    overflow: hidden;
+    animation: hiddeBlockPopUp 1s forwards;
+}
+
+.popUpWrapper {
+    max-width: 1440px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #00000040;
+    z-index: 5;
+}
+
+.popUp {
+    max-width: 1440px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
