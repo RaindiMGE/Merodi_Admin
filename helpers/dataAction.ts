@@ -47,3 +47,12 @@ export const findPlaylistTitle = (id: number, data: PlaylistInfo[]) => {
         }
     }
 }
+
+export const findArtistsIds = (choosenItemsKey: React.Key[], data: ArtistInfo[]) => {
+    const choosenItems = choosenItemsKey.map((key) => Number(key) - 1)
+    const artistsIds = [];
+    for (let i = 0; i < choosenItems.length; i++) {
+        artistsIds.push(data[choosenItems[i]].id)
+    }
+    return artistsIds;
+} 

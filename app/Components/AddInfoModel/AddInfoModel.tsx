@@ -3,31 +3,41 @@
 import SecondaryButton from '../Buttons/SecondaryButton/SecondaryButton';
 import styles from './AddInfoModel.module.scss';
 import AddImageModel from './AddImageModel/AddImageModel';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, ChangeHandler } from 'react-hook-form';
+import Image from 'next/image';
+import { FormEventHandler, useState } from 'react';
+import { ArtistInfo } from '@/app/(authorized)/Artist/AddArtist/page';
 
-interface FormValues {
+export interface FormValues {
     artistName: string;
-    albumName: string;
-    date: string;
+    albumName?: string;
+    date?: string;
     biography: string;
+    file?: File;
 }
 
 interface Props {
     onCancelClick: () => void;
+    onSubmit: (data: FormValues) => void;
+    data?: FormValues;
     isAlbumInfo?: boolean;
 }
 
 const AddInfoModel = (props: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-    const onSubmit: SubmitHandler<FormValues> = data => {
-        console.log("Valid Date:", data.date);
-        alert('Rame')
-    }
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            setSelectedImage(file);
+        } else {
+            setSelectedImage(null)
+        }
+    };
 
-
-    return <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+    return <form className={styles.container} onSubmit={handleSubmit(props.onSubmit)}>
         <div className={styles.mainContent}>
             <h4 className={styles.title}>Add {props.isAlbumInfo ? 'Album' : 'Artist'}</h4>
             <div className={styles.infoBox}>
@@ -106,13 +116,15 @@ const AddInfoModel = (props: Props) => {
                 </div>
                 <div className={styles.addImageBox}>
                     <label className={styles.label} >{props.isAlbumInfo ? 'Cover' : 'Profile'} Photo</label>
-                    <AddImageModel />
+                    <AddImageModel register={{
+                        ...register('file')
+                    }} />
                 </div>
             </div>
         </div>
         <div className={styles.buttonsBox}>
-            <SecondaryButton title='Cancel' onClick={props.onCancelClick} />
-            <SecondaryButton title='Submit' isBlue onClick={handleSubmit(onSubmit)} />
+            <SecondaryButton title='Cancel' type='button' onClick={props.onCancelClick} />
+            <SecondaryButton title='Submit' type='submit' isBlue onClick={handleSubmit(props.onSubmit)} />
         </div>
     </form>
 }

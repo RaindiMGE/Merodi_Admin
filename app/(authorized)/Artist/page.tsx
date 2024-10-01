@@ -10,8 +10,9 @@ import axios from "axios";
 import { getCookie } from "@/helpers/cookies";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
-import { findArtistName, getAddedTime } from "@/helpers/dataAction";
+import { findArtistName, findArtistsIds, getAddedTime } from "@/helpers/dataAction";
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
+import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 
 export interface ArtistInfo {
   id: number;
@@ -29,6 +30,9 @@ const Artist = () => {
   const [showDeletePopUp, setShowDeletePopUp] = useState(false)
   const [artistId, setArtistId] = useState<number>(0)
   const [editArtistId, setEditArtistId] = useState<number | null>(null)
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorType, setErrorType] = useState<'success' | 'error'>();
+  const [showErrorPopUp, setShowErrorPopUp] = useState(false)
 
   const getArtistsData = async () => {
     try {
@@ -76,17 +80,32 @@ const Artist = () => {
       }
     })
     .then((res) => {
-      setShowDeletePopUp(false);
-      alert(`Artist ${res.data.firstName} ${res.data.lastName} Deleted`)
+      setErrorMessage(`Artist ${res.data.firstName} ${res.data.lastName} Deleted`)
+      setErrorType('success')
       getArtistsData();
     })
     .catch((err) => {
-      alert('Error');
+      setErrorMessage('Operation failed. Please try again')
+      setErrorType('error')
     })
+    .finally(() => {
+      setShowDeletePopUp(false);
+      setShowErrorPopUp(true)
+    })
+  }
+
+  const onChoosenItemsClick = (choosenItemsKeys: React.Key[]) => {
+    const deleteArtistsIds = findArtistsIds(choosenItemsKeys, artistData);
+    for (let i = 0; i < deleteArtistsIds.length; i++) {
+      onSubmitDeleteClick(deleteArtistsIds[i])
+    }
   }
 
   return (
     <>
+      {showErrorPopUp && <div className={styles.errorPopUp}>
+        <InfoPopUp message={errorMessage} type={errorType} />
+      </div>}
       <div className={showDeletePopUp ? styles.popUpWrapper : styles.popUp}>
         <div className={showDeletePopUp ? styles.showPopUp : styles.hiddePopUp}>
           <MainPopUp id={artistId} title={"Delete Artist"} message={"Are you sure you want to delete"} target={findArtistName(artistId, artistData)} buttonTitle={"Delete"} onCancelClick={() => setShowDeletePopUp(false)} onSubmitClick={onSubmitDeleteClick}  />
@@ -97,7 +116,7 @@ const Artist = () => {
           <SearchComponent />
           <Button title={"Add Artist"} onClick={onAddArtistCLick} />
         </div>
-        {artistData && <AntTable columns={[
+        {artistData && <AntTable onChoosenItemsClick={onChoosenItemsClick} columns={[
           {
             title: "Artist Name",
             dataIndex: "artistName",
@@ -128,6 +147,7 @@ const Artist = () => {
                 action: <Image onClick={() => {
                   setArtistId(item.id)
                   setShowDeletePopUp(true)
+                  setShowErrorPopUp(false);
                 }} src={"/icons/trash.svg"} alt="block" width={24} height={24} />
               }
             })
