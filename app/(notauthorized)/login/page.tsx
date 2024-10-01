@@ -3,18 +3,20 @@
 import Image from 'next/image';
 import styles from './page.module.scss';
 import Input from '../../Components/InputComponent/InputComponent';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 import { Login } from '../../interfaces/interface';
 import Button from '../../Components/Buttons/PrimaryButton/primaryButtons';
+import router from 'next/router';
 import axios from 'axios';
 import { error } from 'console';
-import { useCookie } from '@/helpers/cookies';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { setCookies } from '@/helpers/cookies';
+import { jwtDecode } from 'jwt-decode';
 
 
-export default () => {
+const LogIn = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<Login>()
     const router = useRouter()
@@ -22,11 +24,16 @@ export default () => {
     const onSubmit: SubmitHandler<Login> = data => {
         axios.post('https://merodibackend-2.onrender.com/auth/login', data)
             .then((res) => {
-                setCookies('token', res.data, 60)
-                router.push('/')
+                const decodedToken = jwtDecode(res.data);
+                if(decodedToken.role == 'admin') {
+                    setCookies('token', res.data, 60)
+                    router.push('/')
+                } else if(decodedToken.role == 'user') {
+                    alert(`You Are Not Admin`)
+                }
             })
             .catch((err) => {
-                alert('Error');
+                alert('Email Or Password Is Incorrect')
             })
     }
 
@@ -79,7 +86,3 @@ export default () => {
 }
 
 export default LogIn;
-
-function setCookies(arg0: string, data: any, arg2: number) {
-    throw new Error('Function not implemented.');
-}

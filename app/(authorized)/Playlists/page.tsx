@@ -29,27 +29,63 @@ export interface PlaylistInfo {
 }
 
 export default function Home() {
-  const [userId , setUserId] = useState<null|Number>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [errorType, setErrorType] = useState<'success' | 'error' | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorType, setErrorType] = useState<'success' | 'error'>();
+  const [showErrorPopUp, setShowErrorPopUp] = useState(false)
+  const [playlists, setPlaylists] = useState<PlaylistInfo[]>([])
+  const [showPopUp, setShowPopUp] = useState(false)
+  const [playlistId, setPlaylistId] = useState(0);
+  const token = getCookie('token');
+ 
 
-  const deletePlaylist = async () => {
-    if (userId === null) return; 
-
+  const getPlaylistData = async () => {
     try {
-      const response = await axios.delete(`https://api.example.com/playlists/${userId}`);
-      
-      if (response.status === 200) {
-        setErrorMessage('Playlist deleted successfully');
-        setErrorType('success');
+      const response = await axios.get('https://merodibackend-2.onrender.com/playlist', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.role == 'admin') {
+          setPlaylists(response.data)
+        } else if (decodedToken.role == 'user') {
+          alert(`You Are Not Admin`)
+          return;
+        }
       }
-    } catch (error) {
-      setErrorMessage('Operation failed. Please try again');
-      setErrorType('error');
-      console.error('Error deleting playlist:', error);
-    } finally {
-      setUserId(null);
     }
+    catch (err) {
+      alert('Error')
+    }
+  }
+
+  useEffect(() => {
+    getPlaylistData()
+  }, [])
+
+  const deletePlaylist = (id: number) => {
+    axios.delete(`https://merodibackend-2.onrender.com/playlists/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setErrorMessage('Playlist deleted successfully');
+          setShowPopUp(false)
+          setErrorType('success');
+          getPlaylistData()
+        }
+      })
+      .catch((error) => {
+        setErrorMessage('Operation failed. Please try again');
+        setErrorType('error');
+        setShowPopUp(false);
+      })
+      .finally(() => {
+        setShowErrorPopUp(true)
+      })
   };
 
   return (
@@ -61,301 +97,50 @@ export default function Home() {
         <div className={showPopUp ? styles.showPopUp : styles.hiddePopUp}>
           <PopUps id={playlistId} title={'Delete Playlist'} message={'Are you sure you want to delete'} target={findPlaylistTitle(playlistId, playlists)} buttonTitle={'Delete'} onCancelClick={() => setShowPopUp(false)} onSubmitClick={deletePlaylist} />
         </div>
-      }
-      <div className={styles.searchh} >
-      <Search/>
       </div>
-      <div className={styles.tbl} >
-      <AntTable isUserInfo columns={[
-        {
-          title: 'Playlist Name', 
-          dataIndex: 'playlistName'
-        },
-        {
-        title: 'User', 
-        dataIndex: 'email'
-      },
-      {
-        title: 'Number of Songs', 
-        dataIndex: 'numberOfSongs'
-      }
-      ]}
-        dataSource={
-          [
+      <main className={styles.container}>
+        <div className={styles.searchh} >
+          <Search />
+        </div>
+        <div className={styles.tbl} >
+          {playlists && <AntTable columns={[
             {
-              key: 1,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
+              title: 'Playlist Name',
+              dataIndex: 'playlistName'
             },
             {
-              key: 2,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
+              title: 'User',
+              dataIndex: 'email'
             },
             {
-              key: 3,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 4,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 5,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 6,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 7,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 8,
-              playlistName:(
-                <div  className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 9,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-
-            {
-              key: 10,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 11,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 12,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 13,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-            {
-              key: 14,
-              playlistName:(
-                <div className={styles.favSong}>
-                  <Image 
-                  src={'/icons/PlaylistIcon.png'}  
-                  alt='PlaylistIcon' 
-                  width={24} 
-                  height={24} 
-                />
-                <span>Fav Songs</span>
-                </div>
-                
-              ) ,
-              email: 'MakaSwift@gmail.com',
-              numberOfSongs: '23',
-              edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
-              action: <Image onClick={() => {setUserId(1)}} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24 
-            },
-          ]
-        }/>
-      </div>
-      {errorMessage && (
-        <ErrorPopUp message={errorMessage} type={errorType} />
-      )}
-    </main>
+              title: 'Number of Songs',
+              dataIndex: 'numberOfSongs'
+            }
+          ]}
+            dataSource={
+              playlists.map((item, index) => {
+                return {
+                  key: index,
+                  playlistName: <div className={styles.favSong}>
+                    <Image src={item.image} alt={'playlist cover'} width={32} height={32} />
+                    <span>{item.title}</span>
+                  </div>,
+                  email: <div className={styles.favSong}>
+                    MakaSwift@gmail.com
+                  </div>,
+                  numberOfSongs: item.musics.length,
+                  edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
+                  action: <Image onClick={() => {
+                    setShowPopUp(true)
+                    setPlaylistId(item.id);
+                    setShowErrorPopUp(false)
+                  }} src={'/icons/trash.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24
+                }
+              })
+            } />}
+        </div>
+      </main>
+    </>
   );
   }
   
