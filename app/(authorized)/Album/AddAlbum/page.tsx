@@ -2,7 +2,7 @@
 
 import AddInfoModel, { FormValues } from "@/app/Components/AddInfoModel/AddInfoModel";
 import { activeAsideMenuId, artistInfo } from "@/app/states";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styles from './page.module.scss';
 import axios from "axios";
@@ -18,6 +18,12 @@ export interface UploadedFileInfo {
 }
 
 const AddAlbum = () => {
+  return <Suspense>
+    <AddAlbumContent />
+  </Suspense>
+};
+
+const AddAlbumContent = () => {
   const [activeAside, setActiveAside] = useRecoilState(activeAsideMenuId);
   const token = getCookie('token')
   const router = useRouter()
@@ -143,7 +149,7 @@ const AddAlbum = () => {
   }
 
   const firstOnSubmit = (data: FormValues) => {
-    if(id) {
+    if (id) {
       editedInfoUpload(data)
     } else {
       onSubmit(data)
@@ -162,6 +168,6 @@ const AddAlbum = () => {
       <AddInfoModel isAlbumInfo onCancelClick={onCancelClick} onSubmit={firstOnSubmit} />
     </div></>
   );
-};
+} 
 
 export default AddAlbum;
