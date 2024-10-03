@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { findArtistName, findArtistsIds, getAddedTime } from "@/helpers/dataAction";
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
+import { useRecoilState } from "recoil";
+import { activeAsideMenuId, artistInfo } from "@/app/states";
 
 export interface ArtistInfo {
   id: number;
@@ -24,7 +26,7 @@ export interface ArtistInfo {
 }
 
 const Artist = () => {
-  const [artistData, setArtistData] = useState<ArtistInfo[]>([]);
+  const [artistData, setArtistData] = useRecoilState(artistInfo);
   const token = getCookie('token')
   const router = useRouter()
   const [showDeletePopUp, setShowDeletePopUp] = useState(false)
@@ -33,6 +35,11 @@ const Artist = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [errorType, setErrorType] = useState<'success' | 'error'>();
   const [showErrorPopUp, setShowErrorPopUp] = useState(false)
+  const [activeAside, setActiveAside] = useRecoilState(activeAsideMenuId);
+
+  useEffect(() => {
+    setActiveAside(2);
+  }, [])
 
   const getArtistsData = async () => {
     try {
@@ -111,12 +118,12 @@ const Artist = () => {
           <MainPopUp id={artistId} title={"Delete Artist"} message={"Are you sure you want to delete"} target={findArtistName(artistId, artistData)} buttonTitle={"Delete"} onCancelClick={() => setShowDeletePopUp(false)} onSubmitClick={onSubmitDeleteClick}  />
         </div>
       </div>
-      <main className={styles.container}>
+      {artistData && <main className={styles.container}>
         <div className={styles.headerBox}>
           <SearchComponent />
           <Button title={"Add Artist"} onClick={onAddArtistCLick} />
         </div>
-        {artistData && <AntTable onChoosenItemsClick={onChoosenItemsClick} columns={[
+        <AntTable onChoosenItemsClick={onChoosenItemsClick} columns={[
           {
             title: "Artist Name",
             dataIndex: "artistName",
@@ -152,8 +159,8 @@ const Artist = () => {
               }
             })
           }
-        />}
-      </main>
+        />
+      </main>}
     </>
   );
 };

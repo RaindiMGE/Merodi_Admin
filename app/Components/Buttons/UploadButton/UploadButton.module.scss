@@ -12,7 +12,6 @@
         align-items: center;
         border-radius: 8px;
         background: #523CDD;
-        max-width: 432px;
         width: 100%;
         position: relative;
         height: 48px;
@@ -51,6 +50,13 @@
         font-size: 14px;
         font-weight: 400;
         color: #020015;
+    }
+
+    .error {
+        color: #F33;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 18px;
     }
 
 }

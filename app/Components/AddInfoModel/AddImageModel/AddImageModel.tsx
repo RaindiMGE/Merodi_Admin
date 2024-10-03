@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import styles from './AddImageModel.module.scss';
 import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 interface Props {
     register: UseFormRegisterReturn
+    error?: FieldError | undefined;
 }
 
 const AddImageModel = (props: Props) => {
@@ -21,11 +22,14 @@ const AddImageModel = (props: Props) => {
         }
     };
 
-    return <div className={styles.addImageModel}>
-        <input type='file' className={styles.chooseImgInput} {...props.register} onChange={handleImageChange} />
-        <Image src={'/icons/plusIcon.svg'} alt='plus icon' width={28} height={28} className={selectedImage ? styles.afterChoose : ''} />
-        {selectedImage && <Image src={URL.createObjectURL(selectedImage)} alt='choosen image' width={208} height={208} />}
-    </div>
+    return <>
+        <div className={styles.addImageModel}>
+            <input type='file' className={styles.chooseImgInput} {...props.register} onChange={handleImageChange} accept='image/*' />
+            <Image src={'/icons/plusIcon.svg'} alt='plus icon' width={28} height={28} className={selectedImage ? styles.afterChoose : ''} />
+            {selectedImage && <Image src={URL.createObjectURL(selectedImage)} alt='choosen image' width={208} height={208} />}
+        </div>
+        {props.error && <span className={styles.error}>{props.error.message}</span>}
+    </>
 }
 
 export default AddImageModel;

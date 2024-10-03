@@ -13,7 +13,7 @@ export interface FormValues {
     albumName?: string;
     date?: string;
     biography: string;
-    file?: File;
+    file: FileList;
 }
 
 interface Props {
@@ -27,15 +27,6 @@ const AddInfoModel = (props: Props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files && e.target.files[0];
-        if (file) {
-            setSelectedImage(file);
-        } else {
-            setSelectedImage(null)
-        }
-    };
 
     return <form className={styles.container} onSubmit={handleSubmit(props.onSubmit)}>
         <div className={styles.mainContent}>

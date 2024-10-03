@@ -1,10 +1,45 @@
-.imgdiv {
-    align-items: center;
-    display: flex;
-    gap: 5px;
+.container {
+  width: 100%;
+
+}
+
+@keyframes ErrorPopUp {
+  0% {
+    height: 0;
+    width: 340px;
+    top: -10px;
+    left: calc((100% - 340px) / 2);
   }
-  .maintwo {
-    display: flex;
-    justify-content: space-between;
+
+  20% {
+    height: 70px;
+    width: 340px;
+    top: 70px;
+    left: calc((100% - 340px) / 2);
   }
-  
+
+  80% {
+    height: 70px;
+    width: 340px;
+    top: 70px;
+    left: calc((100% - 340px) / 2);
+  }
+
+  100% {
+    height: 0;
+    width: 340px;
+    top: -10px;
+    left: calc((100% - 340px) / 2);
+    padding-bottom: 0;
+  }
+}
+
+.errorPopUp {
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  align-items: flex-end;
+  animation: ErrorPopUp 4s forwards;
+  z-index: 5;
+  padding: 10px;
+}
