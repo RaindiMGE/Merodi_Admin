@@ -4,12 +4,15 @@ import Link from 'next/link';
 import styles from './Aside.module.scss';
 import Image from 'next/image';
 import NavBar from './NavBar/NavBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { deleteCookie } from '@/helpers/cookies';
+import { useRecoilState } from 'recoil';
+import { activeAsideMenuId } from '@/app/states';
 
 const Aside = () => {
 
-    const [activePageId, setActvePageId] = useState(1);
+    const [activePageId, setActvePageId] = useRecoilState(activeAsideMenuId);
+
     const onLogoutCLick = () => {
         deleteCookie('token')
     }
@@ -23,7 +26,6 @@ const Aside = () => {
                     title: 'Users',
                     icon: 'defaultUserIcon.svg',
                     clickedIcon: 'activeUserIcon.svg',
-                    onClick: () => setActvePageId(1),
                     href: '/'
                 },
                 {
@@ -31,7 +33,6 @@ const Aside = () => {
                     title: 'Artists',
                     icon: 'defaultArtistIcon.svg',
                     clickedIcon: 'activeArtistIcon.svg',
-                    onClick: () => setActvePageId(2),
                     href: '/Artist'
                 },
                 {
@@ -39,7 +40,6 @@ const Aside = () => {
                     title: 'Albums',
                     icon: 'defaultAlbumIcon.svg',
                     clickedIcon: 'activeAlbumIcon.svg',
-                    onClick: () => setActvePageId(3),
                     href: '/Album'
                 },
                 {
@@ -47,7 +47,6 @@ const Aside = () => {
                     title: 'Playlists',
                     icon: 'defaultPlaylistIcon.svg',
                     clickedIcon: 'activePlaylistIcon.svg',
-                    onClick: () => setActvePageId(4),
                     href: '/Playlists'
                 },
             ]} activePageId={activePageId} />
