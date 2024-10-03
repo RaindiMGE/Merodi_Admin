@@ -10,6 +10,7 @@ import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import { useRecoilState } from "recoil";
 import { activeAsideMenuId } from "@/app/states";
 import { UploadedFileInfo } from "../../Album/AddAlbum/page";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const AddArtist = () => {
     return <Suspense>
@@ -21,7 +22,14 @@ export interface ArtistInfo {
     firstName: string;
     lastName: string;
     biography: string;
-    imageUrl: File;
+    imageUrl: File | string;
+}
+
+interface Artist {
+    firstName: string;
+    lastName: string;
+    biography: string;
+    imageUrl: StaticImport | string;
 }
 
 const AddArtistContent = () => {
@@ -30,7 +38,7 @@ const AddArtistContent = () => {
     const searchParams = useSearchParams();
     const [id, setId] = useState<null | string>(null);
     const token = getCookie('token')
-    const [artistInfo, setArtistInfo] = useState<ArtistInfo>()
+    const [artistInfo, setArtistInfo] = useState<Artist>()
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [errorType, setErrorType] = useState<'success' | 'error'>();
     const [showErrorPopUp, setShowErrorPopUp] = useState(false)
@@ -69,8 +77,6 @@ const AddArtistContent = () => {
             getArtistInfo()
         }
     }, [id])
-
-    console.log(artistInfo);
 
     const editedInfoUpload = (data: ArtistInfo) => {
         const formData = new FormData()
@@ -188,10 +194,12 @@ const AddArtistContent = () => {
                 <InfoPopUp message={errorMessage} type={errorType} />
             </div>}
             <div className={styles.container}>
-                Taylor Swift__17 <br />
-                Taylor Swift 1 is an American singer-songwriter, born on December 13, 1989, in Reading, Pennsylvania. She is known for her narrative songwriting, which often reflects her personal life. Swift's musical style has evolved from country to pop and indie/folk over the years, contributing to her widespread popularity and critical acclaim
 
-                <AddInfoModel onCancelClick={onCancelClick} onSubmit={onSubmitClick} />
+                {artistInfo ? <AddInfoModel data={{
+                    artistName: `${artistInfo?.firstName} ${artistInfo?.lastName}`,
+                    biography: artistInfo?.biography,
+                    file: artistInfo.imageUrl,
+                }} onCancelClick={onCancelClick} onSubmit={onSubmitClick} /> : <AddInfoModel  onCancelClick={onCancelClick} onSubmit={onSubmitClick} />}
             </div>
         </>
     );

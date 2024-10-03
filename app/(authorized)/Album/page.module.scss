@@ -21,6 +21,14 @@
     .albumCover {
       border-radius: 4px;
     }
+
+    .link {
+      color: #737E8C;
+
+      &:hover {
+        color: #4F5154;
+      }
+    }
   }
 }
 

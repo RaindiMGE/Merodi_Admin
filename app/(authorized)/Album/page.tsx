@@ -16,6 +16,7 @@ import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
 import { findAlbumName, findAlbumsIds } from "@/helpers/dataAction";
 import { useRouter } from "next/navigation";
 import Button from "@/app/Components/Buttons/PrimaryButton/primaryButtons";
+import Link from "next/link";
 
 export interface AlbumInfo {
   id: number;
@@ -184,10 +185,10 @@ const Album = () => {
             return {
               key: index + 1,
               albumName: <div className={styles.albumCoverBox}>
-                <Image src={item.imageUrl} alt="album cover" width={32} height={32} className={styles.albumCover} />
-                <span>{item.title}</span>
+                <img src={item.imageUrl} alt="album cover" width={32} height={32} className={styles.albumCover} />
+                <Link className={styles.link} href={`/Album/AlbumSongs?id=${item.id}`}><span>{item.title}</span></Link>
               </div>,
-              artistName: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(', '),
+              artistName: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
               dateofrelease: item.releaseDate,
               edit: <Image src={"/icons/editIcon.svg"} alt="edit" width={24} height={24} onClick={() => setEditAlbumId(item.id)} />,
               action: <Image onClick={() => {

@@ -145,7 +145,7 @@ const Artist = () => {
               return {
                 key: index + 1,
                 artistName: <div className={styles.artistBox}>
-                  <Image className={styles.artistImage} src={item.imageUrl} alt="Artist Image" width={32} height={32} />
+                  <img className={styles.artistImage} src={item.imageUrl} alt="Artist Image" width={32} height={32} />
                   <span>{`${item.firstName} ${item.lastName}`}</span>
                 </div>,
                 biography: <div className={styles.biographyBox}>{item.biography}</div>,

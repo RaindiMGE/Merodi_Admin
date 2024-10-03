@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import styles from './UploadButton.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 interface Props {
     register: UseFormRegisterReturn;
     error: FieldError | undefined;
+    mustReset?: boolean;
 }
 
 const UploadButton = (props: Props) => {
@@ -21,6 +22,12 @@ const UploadButton = (props: Props) => {
             setSelectedImage(null)
         }
     };
+
+    useEffect(() => {
+        if(props.mustReset) {
+            setSelectedImage(null);
+        }
+    }, [props.mustReset])
 
     return <div className={styles.container}>
         <div className={styles.uploadBox}>

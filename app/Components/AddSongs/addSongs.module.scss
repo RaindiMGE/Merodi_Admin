@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 100%;
+  width: 496px;
 }
 
 .inputWrapper {
@@ -39,4 +39,20 @@
 .buttonsWrapper {
   display: flex;
   justify-content: flex-end;
+}
+
+.addImage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+
+  span {
+    color: #737E8C;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+  }
 }
