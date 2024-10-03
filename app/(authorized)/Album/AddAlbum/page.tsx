@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { AlbumInfo } from "../page";
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import { ArtistInfo } from "../../Artist/page";
+import { SassNumber } from "sass";
 
 export interface UploadedFileInfo {
   id: number;
@@ -33,6 +34,7 @@ const AddAlbumContent = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [errorType, setErrorType] = useState<'success' | 'error'>();
   const [showErrorPopUp, setShowErrorPopUp] = useState(false)
+  const [albumInfo, setAlbumInfo] = useState<AlbumInfo>()
 
   useEffect(() => {
     setActiveAside(3);
@@ -48,27 +50,82 @@ const AddAlbumContent = () => {
     }
   }, [searchParams, isMounted])
 
-  const editedInfoUpload = (data: FormValues) => {
+  const editedInfoUpload = async (data: FormValues) => {
     setShowErrorPopUp(false)
     const formData = new FormData()
     formData.append('file', data.file[0])
+    const isFile = !!data.file
 
-    axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
+    if(isFile) {
+      axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        }
+      })
+        .then((res) => {
+          const file: UploadedFileInfo = res.data;
+          addEditedInfoToServer(data, file.id);
+        })
+        .catch((err) => {
+          setErrorMessage('Operation failed. Please try again')
+          setErrorType('error')
+          setShowErrorPopUp(true)
+        })
+    }
+    else {
+      getData(data);
+    }
+  }
+
+  const getData = (data: FormValues) => {
+    const artists = data.artistName.split(', ')
+    const newData = {
+      authors: artists,
+      title: data.albumName,
+      releaseDate: data.date,
+      description: data.biography,
+    }
+    axios.patch(`https://merodibackend-2.onrender.com/album/${id}`, newData, {
       headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
       }
     })
       .then((res) => {
-        const file: UploadedFileInfo = res.data;
-        addEditedInfoToServer(data, file.id);
+        const album: AlbumInfo = res.data
+        setErrorMessage(`Album Updated`)
+        setErrorType('success')
+        router.push(`/Album/AlbumSongs?id=${album.id}`)
       })
       .catch((err) => {
         setErrorMessage('Operation failed. Please try again')
         setErrorType('error')
         setShowErrorPopUp(true)
       })
+      .finally(() => {
+        setShowErrorPopUp(true)
+      })
   }
+
+  const getAlbumData = async (id: number) => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/album/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setAlbumInfo(response.data)
+    }
+    catch (err) {
+      
+    }
+  }
+
+  useEffect(() => {
+    if(id) {
+      getAlbumData(Number(id))
+    }
+  }, [id])
 
   const addEditedInfoToServer = (data: FormValues, fileId: number) => {
     const artists = data.artistName.split(', ')
@@ -116,10 +173,11 @@ const AddAlbumContent = () => {
           Authorization: `Bearer ${token}`,
         }
       })
+      console.log(response.status)
       const albumInfo: AlbumInfo = response.data
       router.push(`/Album/AlbumSongs?id=${albumInfo.id}`)
     }
-    catch (error) {
+    catch (error: any) {
       setErrorMessage('Operation failed. Please try again')
       setErrorType('error')
       setShowErrorPopUp(true)
@@ -127,6 +185,7 @@ const AddAlbumContent = () => {
   }
 
   const onSubmit = async (data: FormValues) => {
+    console.log('rame 2')
     setShowErrorPopUp(false)
     const formData = new FormData()
     formData.append('file', data.file[0])
@@ -165,7 +224,13 @@ const AddAlbumContent = () => {
       <InfoPopUp message={errorMessage} type={errorType} />
     </div>}
     <div className={styles.container}>
-      <AddInfoModel isAlbumInfo onCancelClick={onCancelClick} onSubmit={firstOnSubmit} />
+      {albumInfo ? <AddInfoModel data={{
+        artistName: albumInfo.authors.map((item) => `${item.firstName} ${item.lastName}`).join(', '),
+        albumName: albumInfo.title,
+        date: albumInfo.releaseDate,
+        biography: albumInfo.description,
+        file: albumInfo.imageUrl, 
+      }} isAlbumInfo onCancelClick={onCancelClick} onSubmit={firstOnSubmit} /> : <AddInfoModel isAlbumInfo onCancelClick={onCancelClick} onSubmit={firstOnSubmit} />}
     </div></>
   );
 } 

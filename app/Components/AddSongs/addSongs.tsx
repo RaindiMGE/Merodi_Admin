@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./addSongs.module.scss";
 import UploadButton from "../Buttons/UploadButton/UploadButton";
 import Button from "../Buttons/PrimaryButton/primaryButtons";
@@ -25,16 +25,24 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick, onSubmitClic
   const [songTitle, setSongTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, reset, formState: { errors } } = useForm<MusicInfo>()
+  const [mustReset, setMustReset] = useState<boolean>()
+
+  useEffect(() => {
+    setMustReset(false)
+  }, [])
+
+  const onSubmit = (data: MusicInfo) => {
+    onSubmitClick(data);
+  }
 
   const onCancel = () => {
-    reset()
     onCancelClick()
   }
 
   return (
     <div className={styles.mainDiv}>
       <h2 className={styles.addSong}>Add Song</h2>
-      <form onSubmit={handleSubmit(onSubmitClick)} className={styles.formBox}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formBox}>
         <div className={styles.contentWrapper}>
           <div className={styles.inputWrapper}>
             <Input register={{
@@ -47,12 +55,9 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick, onSubmitClic
             }} placeholder="Song Title" error={errors.title} />
           </div>
 
-          <div className={styles.uploadButtonWrapper}>
-            <UploadButton register={{ ...register('song') }} error={errors.song} />
-          </div>
-
-          <div>
-            <AddImageModel register={{
+          <div className={styles.addImage}>
+            <span>Cover Photo</span>
+            <AddImageModel mustReset={mustReset} register={{
               ...register('image', {
                 required: {
                   value: true,
@@ -61,12 +66,17 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick, onSubmitClic
               })
             }} error={errors.image} />
           </div>
+
+          <div className={styles.uploadButtonWrapper}>
+            <UploadButton mustReset={mustReset} register={{ ...register('song') }} error={errors.song} />
+          </div>
+
         </div>
 
         <div className={styles.buttonsWrapper}>
           <div className={styles.footerBox}>
             <SecondaryButton type="button" title="Cancel" onClick={onCancel} />
-            <SecondaryButton type="submit" onClick={handleSubmit(onSubmitClick)} isBlue title="Submit" />
+            <SecondaryButton type="submit" onClick={handleSubmit(onSubmit)} isBlue title="Submit" />
           </div>
         </div>
       </form>

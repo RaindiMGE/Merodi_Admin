@@ -52,7 +52,7 @@ const AlbumSongContent = () => {
     }
   }, [searchParams, isMounted])
 
-  const getAlbumData = async (id: string) => {
+  const getAlbumData = async () => {
     try {
       const response = await axios.get(`https://merodibackend-2.onrender.com/album/${id}`, {
         headers: {
@@ -75,7 +75,7 @@ const AlbumSongContent = () => {
 
   useEffect(() => {
     if (id) {
-      getAlbumData(id)
+      getAlbumData()
     }
   }, [id])
 
@@ -102,7 +102,7 @@ const AlbumSongContent = () => {
       })
 
       if (id !== null) {
-        getAlbumData(id)
+        getAlbumData()
       }
       setErrorMessage('Music Added')
       setErrorType("success")
@@ -161,8 +161,6 @@ const AlbumSongContent = () => {
       setErrorMessage('Operation Failed. Please Try Again')
       setErrorType('error')
     }
-
-
   }
 
   const onSubmitDeleteClick = (musicId: number) => {
@@ -176,9 +174,7 @@ const AlbumSongContent = () => {
           setErrorMessage('Music deleted successfully');
           setErrorType('success');
         }
-        if (id !== null) {
-          getAlbumData(id)
-        }
+        getAlbumData()
       })
       .catch((error) => {
         setErrorMessage('Operation failed. Please try again');
