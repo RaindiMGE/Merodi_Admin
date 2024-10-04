@@ -14,7 +14,7 @@ import { findArtistName, findArtistsIds, getAddedTime } from "@/helpers/dataActi
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import { useRecoilState } from "recoil";
-import { activeAsideMenuId, artistInfo } from "@/app/states";
+import { activeAsideMenuId, artistInfo, search } from "@/app/states";
 
 export interface ArtistInfo {
   id: number;
@@ -107,6 +107,26 @@ const Artist = () => {
       onSubmitDeleteClick(deleteArtistsIds[i])
     }
   }
+
+  const [searchQuery] = useRecoilState(search)
+
+  const onSearchChange = async () => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setArtistData(response.data.authors)
+    }
+    catch (err) {
+
+    }
+  }
+
+  useEffect(() => {
+    onSearchChange()
+  }, [searchQuery])
 
   return (
     <>

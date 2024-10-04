@@ -82,20 +82,25 @@ const AddArtistContent = () => {
         const formData = new FormData()
         formData.append('file', data.imageUrl)
 
-        axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then((res) => {
-                const file: UploadedFileInfo = res.data;
-                addEditedInfoToServer(data, file.id);
+        if(data.imageUrl) {
+            axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
-            .catch((err) => {
-                setErrorMessage('Operation failed. Please try again')
-                setErrorType('error')
-                setShowErrorPopUp(true)
-            })
+                .then((res) => {
+                    const file: UploadedFileInfo = res.data;
+                    addEditedInfoToServer(data, file.id);
+                })
+                .catch((err) => {
+                    setErrorMessage('Operation failed. Please try again')
+                    setErrorType('error')
+                    setShowErrorPopUp(true)
+                })
+        }
+        else {
+            getData(data)
+        }
     }
 
     const addEditedInfoToServer = (data: ArtistInfo, fileId: number) => {
@@ -138,6 +143,30 @@ const AddArtistContent = () => {
         })
             .then((res) => {
                 setErrorMessage(`Artist Added`)
+                setErrorType('success')
+            })
+            .catch((err) => {
+                setErrorMessage('Operation failed. Please try again')
+                setErrorType('error')
+            })
+            .finally(() => {
+                setShowErrorPopUp(true)
+            })
+    }
+
+    const getData = (data: ArtistInfo) => {
+        const newData = {
+            firstName: data.firstName ? data.firstName : null,
+            lastName: data.lastName ? data.lastName : null,
+            biography: data.biography ? data.biography : null,
+        }
+        axios.patch(`https://merodibackend-2.onrender.com/author/${id}`, newData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((res) => {
+                setErrorMessage(`Artist Updated`)
                 setErrorType('success')
             })
             .catch((err) => {

@@ -128,7 +128,7 @@ export default function Home() {
                 return {
                   key: index,
                   playlistName: <div className={styles.favSong}>
-                    <Image src={item.image} alt={'playlist cover'} width={32} height={32} />
+                    <img src={item.image} alt={'playlist cover'} width={32} height={32} />
                     <span>{item.title}</span>
                   </div>,
                   email: <div className={styles.favSong}>

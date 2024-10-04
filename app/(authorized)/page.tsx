@@ -5,7 +5,7 @@ import AntTable from '../Components/AntTable/Table'
 import Image from 'next/image';
 import PopUps from '../Components/Pop-ups/MainPop-up/MainPop-up'
 import React, { useEffect, useState } from 'react';
-import AddSongs from '../Components/AddSongs/addSongs';
+import AddSongs, { MusicInfo } from '../Components/AddSongs/addSongs';
 import ChangePassword, { Input } from '../Components/ChangePassword/ChangePassword';
 import axios from 'axios';
 import { getCookie } from '@/helpers/cookies';
@@ -14,7 +14,9 @@ import { jwtDecode } from 'jwt-decode';
 import { findUserEmail, findUsersIds } from '@/helpers/dataAction';
 import InfoPopUp from '../Components/Pop-ups/ErrorPop-up/InfoPop-ups';
 import { useRecoilState } from 'recoil';
-import { activeAsideMenuId } from '../states';
+import { activeAsideMenuId, search } from '../states';
+import { AlbumInfo } from './Album/page';
+import { ArtistInfo } from './Artist/page';
 
 export interface UserInfo {
   email: string;
@@ -113,6 +115,26 @@ export default function Home() {
     }
   }
 
+  const [searchQuery] = useRecoilState(search)
+
+  const onSearchChange = async () => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setUsers(response.data.users)
+    }
+    catch (err) {
+
+    }
+  }
+
+  useEffect(() => {
+    onSearchChange()
+  }, [searchQuery])
+
   return (
     <>
       {showErrorPopUp && <div className={styles.errorPopUp}>
@@ -130,7 +152,7 @@ export default function Home() {
       </div>
       {users && <main className={styles.container}>
         <div className={styles.search}>
-          <Search />
+          <Search  />
         </div>
         <div className={styles.tbl}>
           {users && <AntTable onChoosenItemsClick={onChoosenItemsClick} isUserInfo columns={[{

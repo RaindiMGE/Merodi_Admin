@@ -12,3 +12,8 @@ export const artistInfo = atom<ArtistInfo[]>({
     key: 'artistInfo',
     default: [],
 })
+
+export const search = atom({
+    key:  'search',
+    default: '',
+})

@@ -50,6 +50,8 @@ const AddInfoModel = (props: Props) => {
         }
     }, [props.data])
 
+    console.log(albumName)
+
     return <form className={styles.container} onSubmit={handleSubmit(props.onSubmit)}>
         <div className={styles.mainContent}>
             <h4 className={styles.title}>Add {props.isAlbumInfo ? 'Album' : 'Artist'}</h4>
@@ -58,23 +60,26 @@ const AddInfoModel = (props: Props) => {
                     <div className={`${styles.addTextBox}`}>
                         <label className={styles.label}>Album Name</label>
                         <div className={styles.inputWrapper}>
-                            <input type="text" value={albumName} className={styles.input} {...register('albumName', {
-                                required: {
-                                    value: true,
-                                    message: 'Please enter album name',
-                                },
-                                minLength: {
-                                    value: 3,
-                                    message: 'Album name should be at least 3 characters long',
-                                },
-                                maxLength: {
-                                    value: 255,
-                                    message: 'Album name should not be more than 255 characters long',
-                                },
-                                onChange: (e) => {
-                                    setAlbumName(e.target.value)
-                                }
-                            })} />
+
+                            <input type="text" value={albumName} className={styles.input}
+
+                                {...register('albumName', {
+                                    required: {
+                                        value: !(albumName == undefined) ? false : true,
+                                        message: 'Please enter album name',
+                                    },
+                                    minLength: {
+                                        value: 3,
+                                        message: 'Album name should be at least 3 characters long',
+                                    },
+                                    maxLength: {
+                                        value: 255,
+                                        message: 'Album name should not be more than 255 characters long',
+                                    },
+                                    onChange: (e) => {
+                                        setAlbumName(e.target.value)
+                                    }
+                                })} />
                             {errors.albumName && <span className={styles.error}>{errors.albumName.message}</span>}
                         </div>
                     </div>
@@ -84,7 +89,7 @@ const AddInfoModel = (props: Props) => {
                     <div className={styles.inputWrapper}>
                         <input type="text" value={artist} className={styles.input}  {...register('artistName', {
                             required: {
-                                value: true,
+                                value: !(artist == undefined) ? false : true,
                                 message: "Please enter artist name"
                             },
                             minLength: {
@@ -108,7 +113,7 @@ const AddInfoModel = (props: Props) => {
                         <div className={styles.inputWrapper}>
                             <input type='text' value={date} className={styles.dateInput} {...register('date', {
                                 required: {
-                                    value: true,
+                                    value: !(date == undefined) ? false : true,
                                     message: 'Please enter date of release'
                                 },
                                 pattern: {

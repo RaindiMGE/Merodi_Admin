@@ -54,9 +54,7 @@ const AddAlbumContent = () => {
     setShowErrorPopUp(false)
     const formData = new FormData()
     formData.append('file', data.file[0])
-    const isFile = !!data.file
-
-    if(isFile) {
+    if(data.file[0]) {
       axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -81,9 +79,9 @@ const AddAlbumContent = () => {
   const getData = (data: FormValues) => {
     const artists = data.artistName.split(', ')
     const newData = {
-      authors: artists,
       title: data.albumName,
       releaseDate: data.date,
+      authors: artists,
       description: data.biography,
     }
     axios.patch(`https://merodibackend-2.onrender.com/album/${id}`, newData, {
@@ -134,7 +132,7 @@ const AddAlbumContent = () => {
       title: data.albumName,
       releaseDate: data.date,
       description: data.biography,
-      fileId: fileId
+      imageId: fileId
     }
     axios.patch(`https://merodibackend-2.onrender.com/album/${id}`, newData, {
       headers: {
@@ -185,7 +183,6 @@ const AddAlbumContent = () => {
   }
 
   const onSubmit = async (data: FormValues) => {
-    console.log('rame 2')
     setShowErrorPopUp(false)
     const formData = new FormData()
     formData.append('file', data.file[0])
@@ -209,6 +206,7 @@ const AddAlbumContent = () => {
 
   const firstOnSubmit = (data: FormValues) => {
     if (id) {
+      alert('error')
       editedInfoUpload(data)
     } else {
       onSubmit(data)

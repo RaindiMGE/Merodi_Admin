@@ -1,9 +1,10 @@
 'use client'
 
-import { AlbumInfo } from "@/app/(authorized)/Album/page";
+import { AlbumInfo, Music } from "@/app/(authorized)/Album/page";
 import { ArtistInfo } from "@/app/(authorized)/Artist/page";
 import { UserInfo } from "@/app/(authorized)/page"
 import { PlaylistInfo } from "@/app/(authorized)/Playlists/page";
+import { MusicInfo } from "@/app/Components/AddSongs/addSongs";
 import React from "react";
 
 export const findUserEmail = (id: number, data: UserInfo[]) => {
@@ -95,3 +96,13 @@ export const findMusicsIds = (choosenItemsKey: React.Key[], data: AlbumInfo) => 
     }
     return musicsIds;
 } 
+
+export const findSearch = (id: number, musics: Music[]) => {
+    const neededMusics = []
+    for (let i = 0; i < musics.length; i++) {
+        if(musics[i].albumId == id) {
+            neededMusics.push(musics[i])
+        }
+    }
+    return neededMusics
+}
