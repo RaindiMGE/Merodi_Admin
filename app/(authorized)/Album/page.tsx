@@ -30,6 +30,7 @@ export interface AlbumInfo {
     duration: number;
     imageUrl: string;
     albumId: number;
+    playCount: number;
     authors: {
       id: number;
       firstName: string;
@@ -48,6 +49,7 @@ export interface AlbumInfo {
 }
 
 export interface Music {
+  playCount: number
   id: number;
   name: string;
   duration: number;
