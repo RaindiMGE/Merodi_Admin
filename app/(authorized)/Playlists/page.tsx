@@ -102,6 +102,7 @@ export default function Home() {
         }
       })
       setPlaylists(response.data.playlists)
+      setPlaylists(response.data.users)
     }
     catch (err) {
 
@@ -149,6 +150,7 @@ export default function Home() {
                     MakaSwift@gmail.com
                   </div>,
                   numberOfSongs: item.musics.length,
+                  // numberOfSongs: item.musics.length,
                   action: <Image onClick={() => {
                     setShowPopUp(true)
                     setPlaylistId(item.id);
