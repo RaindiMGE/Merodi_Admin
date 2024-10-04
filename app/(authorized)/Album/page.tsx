@@ -9,7 +9,7 @@ import SecondaryButton from "@/app/Components/Buttons/SecondaryButton/SecondaryB
 import axios from "axios";
 import { getCookie } from "@/helpers/cookies";
 import { useRecoilState } from "recoil";
-import { activeAsideMenuId, search } from "@/app/states";
+import { activeAsideMenuId} from "@/app/states";
 import { jwtDecode } from 'jwt-decode';
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
@@ -148,26 +148,19 @@ const Album = () => {
     }
   }
 
-  const [searchQuery] = useRecoilState(search)
-
-  const onSearchChange = async () => {
+  const onSearchChange = async (e: any) => {
     try {
-      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${e.target.value}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      setAlbums(response.data.albums)
+      setAlbums(response.data.users)
     }
     catch (err) {
 
     }
   }
-
-  useEffect(() => {
-    onSearchChange()
-  }, [searchQuery])
-
   return (<>
     {showErrorPopUp && <div className={styles.errorPopUp}>
       <InfoPopUp message={errorMessage} type={errorType} />
@@ -179,7 +172,7 @@ const Album = () => {
     </div>}
     {albums && <div className={styles.container}>
       <div className={styles.headerBox}>
-        <SearchComponent />
+        <SearchComponent onChange={onSearchChange} />
 
         <Button title={"Add Album"} onClick={onAddAlbumClick} />
       </div>

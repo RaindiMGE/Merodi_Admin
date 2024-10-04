@@ -14,7 +14,7 @@ import { findArtistName, findArtistsIds, getAddedTime } from "@/helpers/dataActi
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import { useRecoilState } from "recoil";
-import { activeAsideMenuId, artistInfo, search } from "@/app/states";
+import { activeAsideMenuId, artistInfo, } from "@/app/states";
 
 export interface ArtistInfo {
   id: number;
@@ -108,25 +108,19 @@ const Artist = () => {
     }
   }
 
-  const [searchQuery] = useRecoilState(search)
-
-  const onSearchChange = async () => {
+  const onSearchChange = async (e: any) => {
     try {
-      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${e.target.value}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      setArtistData(response.data.authors)
+      setArtistData(response.data.users)
     }
     catch (err) {
 
     }
   }
-
-  useEffect(() => {
-    onSearchChange()
-  }, [searchQuery])
 
   return (
     <>
@@ -140,7 +134,7 @@ const Artist = () => {
       </div>
       {artistData && <main className={styles.container}>
         <div className={styles.headerBox}>
-          <SearchComponent />
+          <SearchComponent onChange={onSearchChange} />
           <Button title={"Add Artist"} onClick={onAddArtistCLick} />
         </div>
         <AntTable onChoosenItemsClick={onChoosenItemsClick} columns={[

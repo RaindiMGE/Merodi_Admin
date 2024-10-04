@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./page.module.scss";
 import { useRecoilState } from "recoil";
-import { activeAsideMenuId, search } from "@/app/states";
+import { activeAsideMenuId } from "@/app/states";
 import { getCookie } from "@/helpers/cookies";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
@@ -224,26 +224,6 @@ const AlbumSongContent = () => {
     }
   }
 
-  const [searchQuery] = useRecoilState(search)
-
-  const onSearchChange = async () => {
-    try {
-      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      // setMusics(findSearch(id, response.data.musics))
-    }
-    catch (err) {
-
-    }
-  }
-
-  useEffect(() => {
-    onSearchChange()
-  }, [searchQuery])
-
   return (
     <>
       {showErrorPopUp && <div className={styles.errorPopUp}>
@@ -263,7 +243,6 @@ const AlbumSongContent = () => {
       </div>
       {musics && <div className={styles.container}>
         <div className={styles.headerBox}>
-          <SearchComponent />
 
           <div className={styles.addSongsPop}>
             <Button title={"Add Song"} onClick={() => {

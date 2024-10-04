@@ -94,6 +94,20 @@ export default function Home() {
       })
   };
 
+  const onSearchChange = async (e: any) => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${e.target.value}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setPlaylists(response.data.users)
+    }
+    catch (err) {
+
+    }
+  }
+
   return (
     <>
       {showErrorPopUp && <div className={styles.errorPopUp}>
@@ -106,7 +120,7 @@ export default function Home() {
       </div>
       {playlists && <main className={styles.container}>
         <div className={styles.search} >
-          <Search />
+          <Search onChange={onSearchChange} />
         </div>
         <div className={styles.tbl} >
           <AntTable columns={[
@@ -134,8 +148,7 @@ export default function Home() {
                   email: <div className={styles.favSong}>
                     MakaSwift@gmail.com
                   </div>,
-                  numberOfSongs: item.musics.length,
-                  edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} />,
+                  // numberOfSongs: item.musics.length,
                   action: <Image onClick={() => {
                     setShowPopUp(true)
                     setPlaylistId(item.id);

@@ -166,6 +166,7 @@ const AddArtistContent = () => {
             }
         })
             .then((res) => {
+                router.push('/Artist')
                 setErrorMessage(`Artist Updated`)
                 setErrorType('success')
             })
