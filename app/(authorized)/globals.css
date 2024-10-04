@@ -22,7 +22,21 @@ body {
 .contentWrapper {
     display: flex;
     align-items: flex-start;
+    justify-content: space-around;
     gap: 16px;
     max-width: 1440px;
     width: 100%;
+   
+}
+.aside{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.children{
+    max-width: 1440px;
+    width: 100%;
+    right: 0;
+    margin: 0 auto;
+    margin-left: 250px;
 }

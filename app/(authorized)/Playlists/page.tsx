@@ -13,6 +13,8 @@ import { message } from 'antd';
 import { getCookie } from '@/helpers/cookies';
 import { jwtDecode } from 'jwt-decode';
 import { findPlaylistTitle } from '@/helpers/dataAction';
+import { useRecoilState } from 'recoil';
+import { activeAsideMenuId } from '@/app/states';
 
 export interface PlaylistInfo {
   id: number;
@@ -36,7 +38,11 @@ export default function Home() {
   const [showPopUp, setShowPopUp] = useState(false)
   const [playlistId, setPlaylistId] = useState(0);
   const token = getCookie('token');
- 
+  const [activeAside, setActiveAside] = useRecoilState(activeAsideMenuId);
+
+  useEffect(() => {
+    setActiveAside(4);
+  }, [])
 
   const getPlaylistData = async () => {
     try {
@@ -98,12 +104,12 @@ export default function Home() {
           <PopUps id={playlistId} title={'Delete Playlist'} message={'Are you sure you want to delete'} target={findPlaylistTitle(playlistId, playlists)} buttonTitle={'Delete'} onCancelClick={() => setShowPopUp(false)} onSubmitClick={deletePlaylist} />
         </div>
       </div>
-      <main className={styles.container}>
-        <div className={styles.searchh} >
+      {playlists && <main className={styles.container}>
+        <div className={styles.search} >
           <Search />
         </div>
         <div className={styles.tbl} >
-          {playlists && <AntTable columns={[
+          <AntTable columns={[
             {
               title: 'Playlist Name',
               dataIndex: 'playlistName'
@@ -137,9 +143,9 @@ export default function Home() {
                   }} src={'/icons/trash.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24
                 }
               })
-            } />}
+            } />
         </div>
-      </main>
+      </main>}
     </>
   );
   }

@@ -1,13 +1,166 @@
-.maintwo {
+.container {
+  width: 100%;
+  padding: 32px;
+  padding-left: 16px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 24px;
+
+  .headerBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+  }
 }
-.addSongsPop {
-  position: relative;
-  right: 120px;
- 
+
+@keyframes showBlockPopUp {
+  0% {
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    top: calc((100% - 570px) / 2);
+    right: calc((100% - 550px) / 2);
+    width: 550px;
+    height: 570px;
+  }
 }
-.main{
-    padding-left: 25px;
-    padding-top: 25px;
+
+@keyframes hiddeBlockPopUp {
+  0% {
+    top: calc((100% - 570px) / 2);
+    right: calc((100% - 550px) / 2);
+    width: 550px;
+    height: 570px;
+  }
+
+  100% {
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.showPopUp {
+  animation: showBlockPopUp 1s forwards;
+  overflow: hidden;
+  position: absolute;
+  z-index: 3;
+}
+
+.hiddePopUp {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  animation: hiddeBlockPopUp 1s forwards;
+}
+
+.popUpWrapper {
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #00000040;
+  z-index: 5;
+}
+
+.popUp {
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+@keyframes ErrorPopUp {
+  0% {
+    height: 0;
+    width: 340px;
+    top: -10px;
+    left: calc((100% - 340px) / 2);
+  }
+
+  20% {
+    height: 70px;
+    width: 340px;
+    top: 70px;
+    left: calc((100% - 340px) / 2);
+  }
+
+  80% {
+    height: 70px;
+    width: 340px;
+    top: 70px;
+    left: calc((100% - 340px) / 2);
+  }
+
+  100% {
+    height: 0;
+    width: 340px;
+    top: -10px;
+    left: calc((100% - 340px) / 2);
+    padding-bottom: 0;
+  }
+}
+
+.errorPopUp {
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  align-items: flex-end;
+  animation: ErrorPopUp 4s forwards;
+  z-index: 3;
+  padding: 10px;
+}
+
+
+@keyframes hiddeAskPopUp {
+  0% {
+    top: calc((100% - 224px) / 2);
+    right: calc((100% - 490px) / 2);
+    width: 490px;
+    height: 224px;
+  }
+
+  100% {
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+@keyframes showAskPopUp {
+  0% {
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    top: calc((100% - 224px) / 2);
+    right: calc((100% - 490px) / 2);
+    width: 490px;
+    height: 224px;
+  }
+}
+
+.showAskPopUp {
+  animation: showAskPopUp 1s forwards;
+  overflow: hidden;
+  position: absolute;
+  z-index: 3;
+}
+
+.hiddeAskPopUp {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  animation: hiddeAskPopUp 1s forwards;
 }

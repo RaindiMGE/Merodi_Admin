@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Aside from "../Components/AsideMenu/Aside";
+import RecoilWrapper from "../Components/RecoilWrapper/RecoilWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,10 +24,15 @@ export default function RootLayout({
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"></link>
             </head>
             <body className={inter.className}>
-                <div className='contentWrapper'>
-                    <Aside />
-                    {children}
-                </div>
+                <RecoilWrapper >
+                    <div className='contentWrapper'>
+                        <div className="aside" >
+                        <Aside />
+                        </div>
+                        {children}
+                    </div>
+                   
+                </RecoilWrapper>
             </body>
         </html>
     );

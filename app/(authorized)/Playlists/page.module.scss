@@ -1,8 +1,9 @@
 .search {
     display: flex;
-    height: 70px;
-    align-items: flex-end;
-
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 3;
 }
 
 .PopUps {
@@ -75,10 +76,7 @@
 }
 
 .hiddePopUp {
-    position: absolute;
-    z-index: 3;
-    overflow: hidden;
-    animation: hiddeBlockPopUp 1s forwards;
+    display: none;
 }
 
 .popUpWrapper {

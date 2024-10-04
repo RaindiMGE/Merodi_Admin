@@ -1,15 +1,20 @@
 .search {
     display: flex;
-    height: 70px;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 3;
 }
-
+.tbl{
+    
+}
 .container {
     max-width: 1440px;
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    padding: 32px 32px 32px 16px;
 }
 
 @keyframes showBlockPopUp {
@@ -52,10 +57,7 @@
 }
 
 .hiddePopUp {
-    position: absolute;
-    z-index: 3;
-    overflow: hidden;
-    animation: hiddeBlockPopUp 1s forwards;
+    display: none;
 }
 
 .popUpWrapper {
@@ -114,10 +116,7 @@
 }
 
 .hiddeChangePasswordPopUp {
-    position: absolute;
-    z-index: 3;
-    overflow: hidden;
-    animation: hiddeChangePasswordPopUp 1s forwards;
+    display: none;
 }
 
 @keyframes ErrorPopUp {

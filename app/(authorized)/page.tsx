@@ -13,6 +13,8 @@ import Aside from '../Components/AsideMenu/Aside';
 import { jwtDecode } from 'jwt-decode';
 import { findUserEmail, findUsersIds } from '@/helpers/dataAction';
 import InfoPopUp from '../Components/Pop-ups/ErrorPop-up/InfoPop-ups';
+import { useRecoilState } from 'recoil';
+import { activeAsideMenuId } from '../states';
 
 export interface UserInfo {
   email: string;
@@ -29,6 +31,12 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [errorType, setErrorType] = useState<'success' | 'error'>();
   const [showErrorPopUp, setShowErrorPopUp] = useState(false)
+  const [activeAside, setActiveAside] = useRecoilState(activeAsideMenuId);
+
+  useEffect(() => {
+    setActiveAside(1);
+  }, [])
+
 
   const getUsersData = async () => {
     try {
@@ -120,35 +128,35 @@ export default function Home() {
           <ChangePassword userId={editUserId} onCancelClick={() => setEditUserId(-1)} onSubmitClick={onEditSubmitClick} />
         </div>
       </div>
-      <main className={styles.container}>
-          <div className={styles.search}>
-            <Search />
-          </div>
-          <div className={styles.tbl}>
-            {users && <AntTable onChoosenItemsClick={onChoosenItemsClick} isUserInfo columns={[{
-              title: 'Email',
-              dataIndex: 'email'
-            }
-            ]}
-              dataSource={
-                users.map((item, index) => {
-                  return {
-                    key: index + 1,
-                    email: item.email,
-                    edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} onClick={() => {
-                      setEditUserId(item.id)
-                      setShowErrorPopUp(false)
-                    }} />,
-                    action: <Image onClick={() => {
-                      setShowBlockUser(true);
-                      setUserId(item.id)
-                      setShowErrorPopUp(false)
-                    }} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24
-                  }
-                })
-              } />}
-          </div>
-      </main>
+      {users && <main className={styles.container}>
+        <div className={styles.search}>
+          <Search />
+        </div>
+        <div className={styles.tbl}>
+          {users && <AntTable onChoosenItemsClick={onChoosenItemsClick} isUserInfo columns={[{
+            title: 'Email',
+            dataIndex: 'email'
+          }
+          ]}
+            dataSource={
+              users.map((item, index) => {
+                return {
+                  key: index + 1,
+                  email: item.email,
+                  edit: <Image src={'/icons/editIcon.svg'} alt='edit' width={24} height={24} onClick={() => {
+                    setEditUserId(item.id)
+                    setShowErrorPopUp(false)
+                  }} />,
+                  action: <Image onClick={() => {
+                    setShowBlockUser(true);
+                    setUserId(item.id)
+                    setShowErrorPopUp(false)
+                  }} src={'/icons/blockIcon.svg'} alt='block' width={24} height={24} />, dataIndex: 'action', width: 24
+                }
+              })
+            } />}
+        </div>
+      </main>}
     </>
   );
 }
