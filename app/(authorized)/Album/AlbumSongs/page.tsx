@@ -5,17 +5,17 @@ import AntTable from "@/app/Components/AntTable/Table";
 import Button from "@/app/Components/Buttons/PrimaryButton/primaryButtons";
 import SearchComponent from "@/app/Components/SearchComponent/SearchComponent";
 import Image from "next/image";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./page.module.scss";
 import { useRecoilState } from "recoil";
-import { activeAsideMenuId } from "@/app/states";
+import { activeAsideMenuId, search } from "@/app/states";
 import { getCookie } from "@/helpers/cookies";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { AlbumInfo } from "../page";
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
-import { findMusicName, findMusicsIds } from "@/helpers/dataAction";
+import { findMusicName, findMusicsIds, findSearch } from "@/helpers/dataAction";
 
 const AlbumSongs = () => {
   return <Suspense>
@@ -25,6 +25,7 @@ const AlbumSongs = () => {
 
 interface UploadedFileInfo {
   id: number;
+  url: string;
 }
 
 const AlbumSongContent = () => {
@@ -91,8 +92,10 @@ const AlbumSongContent = () => {
       fileIdForUrl: songId,
       imageId: imageId,
       albumId: Number(id),
-      authors: musics?.authors.map((item) => item.id)
+      authors: musics?.authors.map((item) => item.id),
     }
+    
+    console.log(newData)
 
     try {
       const response = await axios.post('https://merodibackend-2.onrender.com/music', newData, {
@@ -115,6 +118,30 @@ const AlbumSongContent = () => {
       setAddSong(false)
       setShowErrorPopUp(true)
     }
+  }
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const getMusicDuration = async (id: number) => {
+    await axios.get(`https://merodibackend-2.onrender.com/files/231`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      const music: UploadedFileInfo = response.data
+      const audio = audioRef.current;
+      if(!audio) {
+        return
+      }
+      audio.src = music.url
+      console.log(audio.duration)
+    })
+    .catch((err) => {
+
+    })
+    const audio = audioRef.current;
+    if (audio) audio.src = ''; 
   }
 
   const getImageId = async (id: number, data: MusicInfo) => {
@@ -153,6 +180,8 @@ const AlbumSongContent = () => {
         }
       })
       const file: UploadedFileInfo = response.data;
+      // getMusicDuration(file.id, data)
+      console.log(file.id)
       await getImageId(file.id, data)
     }
     catch (err) {
@@ -195,6 +224,26 @@ const AlbumSongContent = () => {
     }
   }
 
+  const [searchQuery] = useRecoilState(search)
+
+  const onSearchChange = async () => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      // setMusics(findSearch(id, response.data.musics))
+    }
+    catch (err) {
+
+    }
+  }
+
+  useEffect(() => {
+    onSearchChange()
+  }, [searchQuery])
+
   return (
     <>
       {showErrorPopUp && <div className={styles.errorPopUp}>
@@ -227,44 +276,33 @@ const AlbumSongContent = () => {
         <AntTable onChoosenItemsClick={onChoosenItemsClick}
           columns={[
             {
-              title: "",
-              dataIndex: "sequence",
-              width: 20,
-            },
-            {
-              title: "",
+              title: "Name",
               dataIndex: "name",
               width: 250,
             },
             {
-              title: "",
+              title: "Artist",
               dataIndex: "artist",
             },
             {
-              title: "",
+              title: "Listen",
               dataIndex: "listen",
             },
             {
-              title: "",
+              title: "Duration",
               dataIndex: "duration",
             },
           ]}
           dataSource={musics.musics.map((item, index) => {
             return {
               key: index,
-              sequence: index + 1,
-              name: item.name,
+              name: <div className={styles.musicName}>
+                <span>{index + 1}</span>
+                <span>{item.name}</span>
+              </div>,
               artist: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
               listen: "2.1B",
               duration: `${item.duration}`,
-              edit: (
-                <Image
-                  src={"/icons/editIcon.svg"}
-                  alt="edit"
-                  width={24}
-                  height={24}
-                />
-              ),
               action: (
                 <Image
                   onClick={() => {

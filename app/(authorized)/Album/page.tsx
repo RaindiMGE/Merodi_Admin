@@ -9,7 +9,7 @@ import SecondaryButton from "@/app/Components/Buttons/SecondaryButton/SecondaryB
 import axios from "axios";
 import { getCookie } from "@/helpers/cookies";
 import { useRecoilState } from "recoil";
-import { activeAsideMenuId } from "@/app/states";
+import { activeAsideMenuId, search } from "@/app/states";
 import { jwtDecode } from 'jwt-decode';
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
@@ -148,6 +148,26 @@ const Album = () => {
     }
   }
 
+  const [searchQuery] = useRecoilState(search)
+
+  const onSearchChange = async () => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setAlbums(response.data.albums)
+    }
+    catch (err) {
+
+    }
+  }
+
+  useEffect(() => {
+    onSearchChange()
+  }, [searchQuery])
+
   return (<>
     {showErrorPopUp && <div className={styles.errorPopUp}>
       <InfoPopUp message={errorMessage} type={errorType} />
@@ -169,15 +189,18 @@ const Album = () => {
         columns={[
           {
             title: 'Album Name',
-            dataIndex: 'albumName'
+            dataIndex: 'albumName',
+            width: 330
           },
           {
             title: "Artist Name",
             dataIndex: "artistName",
+            width: 368
           },
           {
             title: "Date of release",
             dataIndex: "dateofrelease",
+            width: 316
           },
         ]}
         dataSource={
@@ -188,7 +211,7 @@ const Album = () => {
                 <img src={item.imageUrl} alt="album cover" width={32} height={32} className={styles.albumCover} />
                 <Link className={styles.link} href={`/Album/AlbumSongs?id=${item.id}`}><span>{item.title}</span></Link>
               </div>,
-              artistName: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
+              // artistName: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
               dateofrelease: item.releaseDate,
               edit: <Image src={"/icons/editIcon.svg"} alt="edit" width={24} height={24} onClick={() => setEditAlbumId(item.id)} />,
               action: <Image onClick={() => {

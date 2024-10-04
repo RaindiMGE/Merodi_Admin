@@ -23,6 +23,11 @@
     }
 
     .link {
+      display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
       color: #737E8C;
 
       &:hover {
