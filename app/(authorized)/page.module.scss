@@ -55,7 +55,10 @@
 }
 
 .hiddePopUp {
-   display: none;
+    position: absolute;
+    z-index: 3;
+    overflow: hidden;
+    animation: hiddeBlockPopUp 0.1s forwards;
 }
 
 .popUpWrapper {
@@ -114,7 +117,10 @@
 }
 
 .hiddeChangePasswordPopUp {
-    display: none;
+    position: absolute;
+    z-index: 3;
+    overflow: hidden;
+    animation: hiddeChangePasswordPopUp 0.1s forwards;
 }
 
 @keyframes ErrorPopUp {

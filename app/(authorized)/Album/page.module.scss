@@ -77,7 +77,10 @@
 }
 
 .hiddePopUp {
-  display: none;
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  animation: hiddeBlockPopUp 0.1s forwards;
 }
 
 .popUpWrapper {

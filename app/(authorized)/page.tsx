@@ -14,7 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 import { findUserEmail, findUsersIds } from '@/helpers/dataAction';
 import InfoPopUp from '../Components/Pop-ups/ErrorPop-up/InfoPop-ups';
 import { useRecoilState } from 'recoil';
-import { activeAsideMenuId, search } from '../states';
+import { activeAsideMenuId } from '../states';
 import { AlbumInfo } from './Album/page';
 import { ArtistInfo } from './Artist/page';
 
@@ -115,11 +115,9 @@ export default function Home() {
     }
   }
 
-  const [searchQuery] = useRecoilState(search)
-
-  const onSearchChange = async () => {
+  const onSearchChange = async (e: any) => {
     try {
-      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${searchQuery}`, {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${e.target.value}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -130,10 +128,6 @@ export default function Home() {
 
     }
   }
-
-  useEffect(() => {
-    onSearchChange()
-  }, [searchQuery])
 
   return (
     <>
@@ -152,7 +146,7 @@ export default function Home() {
       </div>
       {users && <main className={styles.container}>
         <div className={styles.search}>
-          <Search  />
+          <Search onChange={onSearchChange} />
         </div>
         <div className={styles.tbl}>
           {users && <AntTable onChoosenItemsClick={onChoosenItemsClick} isUserInfo columns={[{
