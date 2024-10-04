@@ -12,7 +12,7 @@ import { activeAsideMenuId } from "@/app/states";
 import { getCookie } from "@/helpers/cookies";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import { AlbumInfo } from "../page";
+import { AlbumInfo, Music } from "../page";
 import InfoPopUp from "@/app/Components/Pop-ups/ErrorPop-up/InfoPop-ups";
 import MainPopUp from "@/app/Components/Pop-ups/MainPop-up/MainPop-up";
 import { findMusicName, findMusicsIds, findSearch } from "@/helpers/dataAction";
@@ -50,7 +50,7 @@ const AlbumSongContent = () => {
   useEffect(() => {
     if (isMounted && searchParams) {
       setId(searchParams.get('id'))
-    }
+    } 
   }, [searchParams, isMounted])
 
   const getAlbumData = async () => {
@@ -95,7 +95,6 @@ const AlbumSongContent = () => {
       authors: musics?.authors.map((item) => item.id),
     }
     
-    console.log(newData)
 
     try {
       const response = await axios.post('https://merodibackend-2.onrender.com/music', newData, {
@@ -123,25 +122,24 @@ const AlbumSongContent = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const getMusicDuration = async (id: number) => {
-    await axios.get(`https://merodibackend-2.onrender.com/files/231`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then((response) => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/files/231`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       const music: UploadedFileInfo = response.data
+      console.log('rame')
       const audio = audioRef.current;
-      if(!audio) {
-        return
-      }
+      // if (!audio) {
+      //   console.log('vinme')
+      //   return
+      // }
       audio.src = music.url
       console.log(audio.duration)
-    })
-    .catch((err) => {
-
-    })
-    const audio = audioRef.current;
-    if (audio) audio.src = ''; 
+    } catch (err)  {
+      console.log(err)
+    }
   }
 
   const getImageId = async (id: number, data: MusicInfo) => {
@@ -180,8 +178,7 @@ const AlbumSongContent = () => {
         }
       })
       const file: UploadedFileInfo = response.data;
-      // getMusicDuration(file.id, data)
-      console.log(file.id)
+      await getMusicDuration(file.id)
       await getImageId(file.id, data)
     }
     catch (err) {
@@ -224,6 +221,22 @@ const AlbumSongContent = () => {
     }
   }
 
+  const [music, setMusic] = useState<Music[]>()
+
+  const onSearchChange = async (e: any) => {
+    try {
+      const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${e.target.value}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setMusic(findSearch(Number(id), response.data.musics))
+    }
+    catch (err) {
+
+    }
+  }
+
   return (
     <>
       {showErrorPopUp && <div className={styles.errorPopUp}>
@@ -243,7 +256,7 @@ const AlbumSongContent = () => {
       </div>
       {musics && <div className={styles.container}>
         <div className={styles.headerBox}>
-
+          <SearchComponent onChange={onSearchChange} />
           <div className={styles.addSongsPop}>
             <Button title={"Add Song"} onClick={() => {
               setShowErrorPopUp(false)
@@ -272,7 +285,7 @@ const AlbumSongContent = () => {
               dataIndex: "duration",
             },
           ]}
-          dataSource={musics.musics.map((item, index) => {
+          dataSource={music ? music.map((item, index) => {
             return {
               key: index,
               name: <div className={styles.musicName}>
@@ -280,7 +293,31 @@ const AlbumSongContent = () => {
                 <span>{item.name}</span>
               </div>,
               artist: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
-              listen: "2.1B",
+              listen: `${item.playCount}`,
+              duration: `${item.duration}`,
+              action: (
+                <Image
+                  onClick={() => {
+                    setShowErrorPopUp(false)
+                    setShowAskPopUp(true)
+                    setMusicId(item.id)
+                  }}
+                  src={"/icons/trash.svg"}
+                  alt="block"
+                  width={24}
+                  height={24}
+                />
+              ),
+            }
+          }) : musics.musics.map((item, index) => {
+            return {
+              key: index,
+              name: <div className={styles.musicName}>
+                <span>{index + 1}</span>
+                <span>{item.name}</span>
+              </div>,
+              artist: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
+              listen: `${item.playCount}`,
               duration: `${item.duration}`,
               action: (
                 <Image

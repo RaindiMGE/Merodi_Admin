@@ -101,7 +101,7 @@ export default function Home() {
           Authorization: `Bearer ${token}`
         }
       })
-      setPlaylists(response.data.users)
+      setPlaylists(response.data.playlists)
     }
     catch (err) {
 
@@ -148,7 +148,7 @@ export default function Home() {
                   email: <div className={styles.favSong}>
                     MakaSwift@gmail.com
                   </div>,
-                  // numberOfSongs: item.musics.length,
+                  numberOfSongs: item.musics.length,
                   action: <Image onClick={() => {
                     setShowPopUp(true)
                     setPlaylistId(item.id);
