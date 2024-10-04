@@ -135,8 +135,6 @@ const AlbumSongContent = () => {
       //   console.log('vinme')
       //   return
       // }
-      audio.src = music.url
-      console.log(audio.duration)
     } catch (err)  {
       console.log(err)
     }
