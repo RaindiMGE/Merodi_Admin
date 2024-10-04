@@ -78,11 +78,11 @@ const AddArtistContent = () => {
         }
     }, [id])
 
-    const editedInfoUpload = (data: ArtistInfo) => {
+    const editedInfoUpload = (data: FormValues) => {
         const formData = new FormData()
-        formData.append('file', data.imageUrl)
+        formData.append('file', data.file)
 
-        if(data.imageUrl) {
+        if(data.file) {
             axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -103,10 +103,11 @@ const AddArtistContent = () => {
         }
     }
 
-    const addEditedInfoToServer = (data: ArtistInfo, fileId: number) => {
+    const addEditedInfoToServer = (data: FormValues, fileId: number) => {
+        const artist = data.artistName.split(', ')
         const newData = {
-            firstName: data.firstName,
-            lastName: data.lastName,
+            firstName: data.artistName ? artist[0] : null,
+            lastName: data.artistName ? artist[1] : null,
             biography: data.biography,
             imageId: fileId,
         }
@@ -154,11 +155,13 @@ const AddArtistContent = () => {
             })
     }
 
-    const getData = (data: ArtistInfo) => {
+    const getData = (data: FormValues) => {
+        const artist = data.artistName && data.artistName.split(', ');
         const newData = {
-            firstName: data.firstName ? data.firstName : null,
-            lastName: data.lastName ? data.lastName : null,
-            biography: data.biography ? data.biography : null,
+            firstName: data.artistName ? artist[0] : null,
+            lastName: data.artistName ? artist[1] : null,
+            biography: data.biography,
+            imageId: data.file ? 0 : null,
         }
         axios.patch(`https://merodibackend-2.onrender.com/author/${id}`, newData, {
             headers: {
