@@ -81,9 +81,9 @@ const AddAlbumContent = () => {
     const newData = {
       title: data.albumName ? data.albumName : null,
       releaseDate: data.date ? data.date : null,
-      authors: artists.length !== 0 ? artists : null,
+      authors: data.artistName ? artists : null,
       description: data.biography ? data.biography : null,
-      imageId: null
+      image: data.file ? 0 : null,
     }
     axios.patch(`https://merodibackend-2.onrender.com/album/${id}`, newData, {
       headers: {
