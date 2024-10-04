@@ -79,10 +79,11 @@ const AddAlbumContent = () => {
   const getData = (data: FormValues) => {
     const artists = data.artistName.split(', ')
     const newData = {
-      title: data.albumName,
-      releaseDate: data.date,
-      authors: artists,
-      description: data.biography,
+      title: data.albumName ? data.albumName : null,
+      releaseDate: data.date ? data.date : null,
+      authors: artists.length !== 0 ? artists : null,
+      description: data.biography ? data.biography : null,
+      imageId: null
     }
     axios.patch(`https://merodibackend-2.onrender.com/album/${id}`, newData, {
       headers: {
@@ -128,10 +129,10 @@ const AddAlbumContent = () => {
   const addEditedInfoToServer = (data: FormValues, fileId: number) => {
     const artists = data.artistName.split(', ')
     const newData = {
-      authors: artists,
-      title: data.albumName,
-      releaseDate: data.date,
-      description: data.biography,
+      title: data.albumName ? data.albumName : null,
+      releaseDate: data.date ? data.date : null,
+      authors: artists.length !== 0 ? artists : null,
+      description: data.biography ? data.biography : null,
       imageId: fileId
     }
     axios.patch(`https://merodibackend-2.onrender.com/album/${id}`, newData, {
@@ -206,7 +207,6 @@ const AddAlbumContent = () => {
 
   const firstOnSubmit = (data: FormValues) => {
     if (id) {
-      alert('error')
       editedInfoUpload(data)
     } else {
       onSubmit(data)
