@@ -14,7 +14,8 @@ export interface FormValues {
     albumName?: string;
     date?: string;
     biography: string;
-    file: FileList | string;
+    file: FileList;
+    fileUrl: string;
 }
 
 interface Props {

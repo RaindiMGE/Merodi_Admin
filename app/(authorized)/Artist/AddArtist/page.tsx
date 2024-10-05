@@ -80,7 +80,7 @@ const AddArtistContent = () => {
 
     const editedInfoUpload = (data: FormValues) => {
         const formData = new FormData()
-        formData.append('file', data.file)
+        formData.append('file', data.file[0])
 
         if(data.file) {
             axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
@@ -159,7 +159,7 @@ const AddArtistContent = () => {
         const artist = data.artistName && data.artistName.split(', ');
         const newData = {
             firstName: data.artistName ? artist[0] : null,
-            lastName: data.artistName ? artist[1] : null,
+            lastName: (data.artistName && artist[1]) ? artist[1] : null,
             biography: data.biography,
             imageId: data.file ? 0 : null,
         }
@@ -211,8 +211,14 @@ const AddArtistContent = () => {
             biography: data.biography,
             imageUrl: data.file[0]
         }
+        const updatedData = {
+            firstName: artistName[0],
+            lastName: artistName[1],
+            biography: data.biography,
+            imageUrl: data.file
+        }
         if (id) {
-            editedInfoUpload(newData);
+            editedInfoUpload(data);
         } else {
             newInfoUpload(newData);
         }

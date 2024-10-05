@@ -206,7 +206,7 @@ const Album = () => {
                 <img src={item.imageUrl} alt="album cover" width={32} height={32} className={styles.albumCover} />
                 <Link className={styles.link} href={`/Album/AlbumSongs?id=${item.id}`}><span>{item.title}</span></Link>
               </div>,
-              // artistName: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
+              artistName: item.authors.map((item) => `${item.firstName} ${item.lastName}`).join(),
               dateofrelease: item.releaseDate,
               edit: <Image src={"/icons/editIcon.svg"} alt="edit" width={24} height={24} onClick={() => setEditAlbumId(item.id)} />,
               action: <Image onClick={() => {
