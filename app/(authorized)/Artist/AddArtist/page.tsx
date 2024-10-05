@@ -82,7 +82,7 @@ const AddArtistContent = () => {
         const formData = new FormData()
         formData.append('file', data.file[0])
 
-        if(data.file) {
+        if(data.file.length !== 0) {
             axios.post(`https://merodibackend-2.onrender.com/files/upload`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -133,7 +133,7 @@ const AddArtistContent = () => {
     const addNewInfoToServer = (fileId: number, data: ArtistInfo) => {
         const newData = {
             firstName: data.firstName,
-            lastName: data.lastName,
+            lastName: data.lastName ? data.lastName : '',
             biography: data.biography,
             imageId: fileId,
         }
@@ -160,8 +160,7 @@ const AddArtistContent = () => {
         const newData = {
             firstName: data.artistName ? artist[0] : null,
             lastName: (data.artistName && artist[1]) ? artist[1] : null,
-            biography: data.biography,
-            imageId: data.file ? 0 : null,
+            biography: data.biography ? data.biography : null,
         }
         axios.patch(`https://merodibackend-2.onrender.com/author/${id}`, newData, {
             headers: {
