@@ -63,7 +63,7 @@
   position: absolute;
   z-index: 3;
   overflow: hidden;
-  animation: hiddeBlockPopUp 0.1s forwards;
+  animation: hiddeBlockPopUp 0.01s forwards;
 }
 
 .popUpWrapper {
@@ -167,5 +167,5 @@
   position: absolute;
   z-index: 3;
   overflow: hidden;
-  animation: hiddeAskPopUp 1s forwards;
+  animation: hiddeAskPopUp 0.01s forwards;
 }

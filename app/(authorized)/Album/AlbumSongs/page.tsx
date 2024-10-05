@@ -42,10 +42,15 @@ const AlbumSongContent = () => {
   const [musics, setMusics] = useState<AlbumInfo>()
   const [showAskPopUp, setShowAskPopUp] = useState(false)
   const [musicId, setMusicId] = useState(0)
+  const [mustReset, setMustReset] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  useEffect(() => {
+    setMustReset(false);
+  })
 
   useEffect(() => {
     if (isMounted && searchParams) {
@@ -108,6 +113,7 @@ const AlbumSongContent = () => {
       }
       setErrorMessage('Music Added')
       setErrorType("success")
+      setMustReset(true)
     }
     catch (err) {
       setErrorMessage('Operation Failed. Please Try Again')
@@ -119,26 +125,32 @@ const AlbumSongContent = () => {
     }
   }
 
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [audioSrc, setAudioSrc] = useState<string | null>(null); // For the audio URL
+  const [duration, setDuration] = useState<number | null>(null);
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const audio = audioRef.current;
   const getMusicDuration = async (id: number) => {
     try {
       const response = await axios.get(`https://merodibackend-2.onrender.com/files/231`, {
         headers: {
           Authorization: `Bearer ${token}`
-        }
+        },
+        responseType: 'blob',
       })
-      const music: UploadedFileInfo = response.data
-      console.log('rame')
-      const audio = audioRef.current;
-      // if (!audio) {
-      //   console.log('vinme')
-      //   return
-      // }
+      const audioUrl = URL.createObjectURL(response.data); // Create a URL from blob
+      setAudioSrc(audioUrl); 
+
     } catch (err)  {
       console.log(err)
     }
   }
+
+  const handleMetadataLoaded = (event: React.SyntheticEvent<HTMLAudioElement>) => {
+    const audio = event.currentTarget;
+    setDuration(audio.duration);
+    console.log(audio.duration) 
+  };
 
   const getImageId = async (id: number, data: MusicInfo) => {
     const imageData = new FormData()
@@ -232,8 +244,9 @@ const AlbumSongContent = () => {
     }
     catch (err) {
 
-    }
+    } 
   }
+
 
   return (
     <>
@@ -242,7 +255,10 @@ const AlbumSongContent = () => {
       </div>}
       <div className={showAddSong ? styles.popUpWrapper : styles.popUp}>
         <div className={showAddSong ? styles.showPopUp : styles.hiddePopUp}>
-          <AddSongs userId={""} onCancelClick={() => setAddSong(false)} onSubmitClick={onAddSongClick} />
+          <AddSongs userId={""} onCancelClick={() => {
+            setMustReset(true)
+            setAddSong(false)
+          }} onSubmitClick={onAddSongClick} mustReset={mustReset} />
         </div>
       </div>
       <div className={showAskPopUp ? styles.popUpWrapper : styles.popUp}>
@@ -252,6 +268,18 @@ const AlbumSongContent = () => {
           }} onSubmitClick={onSubmitDeleteClick} />}
         </div>
       </div>
+      {audioSrc && (
+        <>
+          <audio
+            controls
+            src={audioSrc}
+            onLoadedMetadata={handleMetadataLoaded} // Get metadata including duration
+          />
+          {duration !== null && (
+            <p>Duration: {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}</p>
+          )}
+        </>
+      )}
       {musics && <div className={styles.container}>
         <div className={styles.headerBox}>
           <SearchComponent onChange={onSearchChange} />
@@ -333,6 +361,7 @@ const AlbumSongContent = () => {
             }
           })}
         />
+        
       </div>} </>
   );
 }

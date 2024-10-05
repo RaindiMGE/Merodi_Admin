@@ -13,6 +13,7 @@ interface AddSongsProps {
   userId: string;
   onCancelClick: () => void;
   onSubmitClick: (data: MusicInfo) => void;
+  mustReset?: boolean;
 }
 
 export interface MusicInfo {
@@ -21,21 +22,26 @@ export interface MusicInfo {
   song: FileList
 }
 
-const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick, onSubmitClick }) => {
+const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick, onSubmitClick, mustReset }) => {
   const [songTitle, setSongTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, reset, formState: { errors } } = useForm<MusicInfo>()
-  const [mustReset, setMustReset] = useState<boolean>()
+  const [mustResett, setMustReset] = useState<boolean>()
 
   useEffect(() => {
-    setMustReset(false)
-  }, [])
+    if(mustReset) {
+      reset()
+    }
+  }, [mustReset])
 
   const onSubmit = (data: MusicInfo) => {
     onSubmitClick(data);
+    setMustReset(true)
   }
 
   const onCancel = () => {
+    setMustReset(true)
+    reset()
     onCancelClick()
   }
 
@@ -45,11 +51,14 @@ const AddSongs: React.FC<AddSongsProps> = ({ userId, onCancelClick, onSubmitClic
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formBox}>
         <div className={styles.contentWrapper}>
           <div className={styles.inputWrapper}>
-            <Input register={{
+            <Input mustReset={mustReset} register={{
               ...register('title', {
                 required: {
                   value: true,
                   message: 'Please enter a title',
+                },
+                onChange: (e) => {
+                  setSongTitle(e.target.value);
                 }
               })
             }} placeholder="Song Title" error={errors.title} />

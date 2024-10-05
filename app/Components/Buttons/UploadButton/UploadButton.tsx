@@ -14,6 +14,12 @@ interface Props {
 const UploadButton = (props: Props) => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
+    useEffect(() => {
+        if (props.mustReset) {
+            setSelectedImage(null);
+        }
+    }, [props.mustReset])
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -22,12 +28,6 @@ const UploadButton = (props: Props) => {
             setSelectedImage(null)
         }
     };
-
-    useEffect(() => {
-        if(props.mustReset) {
-            setSelectedImage(null);
-        }
-    }, [props.mustReset])
 
     return <div className={styles.container}>
         <div className={styles.uploadBox}>
