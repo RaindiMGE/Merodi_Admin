@@ -268,18 +268,6 @@ const AlbumSongContent = () => {
           }} onSubmitClick={onSubmitDeleteClick} />}
         </div>
       </div>
-      {audioSrc && (
-        <>
-          <audio
-            controls
-            src={audioSrc}
-            onLoadedMetadata={handleMetadataLoaded} // Get metadata including duration
-          />
-          {duration !== null && (
-            <p>Duration: {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}</p>
-          )}
-        </>
-      )}
       {musics && <div className={styles.container}>
         <div className={styles.headerBox}>
           <SearchComponent onChange={onSearchChange} />
