@@ -68,7 +68,7 @@ const AddArtistContent = () => {
             setArtistInfo(response.data)
         }
         catch (err) {
-            console.error(err)
+            
         }
     }
 

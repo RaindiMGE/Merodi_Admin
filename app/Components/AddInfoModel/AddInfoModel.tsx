@@ -51,7 +51,7 @@ const AddInfoModel = (props: Props) => {
         }
     }, [props.data])
 
-    console.log(albumName)
+    
 
     return <form className={styles.container} onSubmit={handleSubmit(props.onSubmit)}>
         <div className={styles.mainContent}>

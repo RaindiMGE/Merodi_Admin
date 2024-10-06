@@ -172,7 +172,6 @@ const AddAlbumContent = () => {
           Authorization: `Bearer ${token}`,
         }
       })
-      console.log(response.status)
       const albumInfo: AlbumInfo = response.data
       router.push(`/Album/AlbumSongs?id=${albumInfo.id}`)
     }
