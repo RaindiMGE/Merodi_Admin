@@ -16,6 +16,7 @@
   border: 1px solid #F6F9FB;
   background: #FFF;
   cursor: pointer;
+  user-select: none;
 
   &:hover {
     background-color: #D6D6D6;
