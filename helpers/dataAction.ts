@@ -2,7 +2,7 @@
 
 import { AlbumInfo, Music } from "@/app/(authorized)/Album/page";
 import { ArtistInfo } from "@/app/(authorized)/Artist/page";
-import { UserInfo } from "@/app/(authorized)/page"
+import { UserInfo } from "@/app/(authorized)/User/page"
 import { PlaylistInfo } from "@/app/(authorized)/Playlists/page";
 import { MusicInfo } from "@/app/Components/AddSongs/addSongs";
 import React from "react";
