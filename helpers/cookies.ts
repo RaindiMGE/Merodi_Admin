@@ -33,6 +33,6 @@ export function getCookie(name: string) {
         const finalValue = cookieValue?.split(';').shift();
         return finalValue;
     } else {
-        console.log('Cookie not found');
+        
     }
 }

@@ -68,7 +68,7 @@ const AlbumSongContent = () => {
       setMusics(response.data)
     }
     catch (err) {
-      console.log(err)
+
     }
   }
 
@@ -142,14 +142,14 @@ const AlbumSongContent = () => {
       setAudioSrc(audioUrl); 
 
     } catch (err)  {
-      console.log(err)
+      
     }
   }
 
   const handleMetadataLoaded = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     const audio = event.currentTarget;
     setDuration(audio.duration);
-    console.log(audio.duration) 
+    
   };
 
   const getImageId = async (id: number, data: MusicInfo) => {

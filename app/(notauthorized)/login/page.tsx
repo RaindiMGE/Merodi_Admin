@@ -8,7 +8,6 @@ import { Login } from '../../interfaces/interface';
 import Button from '../../Components/Buttons/PrimaryButton/primaryButtons';
 import router from 'next/router';
 import axios from 'axios';
-import { error } from 'console';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
