@@ -157,7 +157,7 @@ const Album = () => {
           Authorization: `Bearer ${token}`
         }
       })
-      setAlbums(response.data.users)
+      setAlbums(response.data.albums)
     }
     catch (err) {
 

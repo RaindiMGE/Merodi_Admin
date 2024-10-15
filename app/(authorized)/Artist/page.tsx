@@ -115,7 +115,7 @@ const Artist = () => {
           Authorization: `Bearer ${token}`
         }
       })
-      setArtistData(response.data.users)
+      setArtistData(response.data.authors)
     }
     catch (err) {
 

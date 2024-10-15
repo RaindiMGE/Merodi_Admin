@@ -8,12 +8,15 @@ import { useEffect, useState } from 'react';
 import { deleteCookie } from '@/helpers/cookies';
 import { useRecoilState } from 'recoil';
 import { activeAsideMenuId } from '@/app/states';
+import { useRouter } from 'next/navigation';
 
 const Aside = () => {
 
     const [activePageId, setActvePageId] = useRecoilState(activeAsideMenuId);
+    const router = useRouter()
 
     const onLogoutCLick = () => {
+        router.push('/login')
         deleteCookie('token')
     }
 
@@ -26,7 +29,7 @@ const Aside = () => {
                     title: 'Users',
                     icon: 'defaultUserIcon.svg',
                     clickedIcon: 'activeUserIcon.svg',
-                    href: '/'
+                    href: '/User'
                 },
                 {
                     id: 2,

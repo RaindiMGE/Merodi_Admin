@@ -68,7 +68,6 @@ const AddArtistContent = () => {
             setArtistInfo(response.data)
         }
         catch (err) {
-            console.error(err)
         }
     }
 
@@ -104,7 +103,7 @@ const AddArtistContent = () => {
     }
 
     const addEditedInfoToServer = (data: FormValues, fileId: number) => {
-        const artist = data.artistName.split(', ')
+        const artist = data.artistName.split(' ')
         const newData = {
             firstName: data.artistName ? artist[0] : null,
             lastName: data.artistName ? artist[1] : null,
@@ -119,6 +118,7 @@ const AddArtistContent = () => {
             .then((res) => {
                 setErrorMessage(`Artist Updated`)
                 setErrorType('success')
+                router.push('/Artist')
             })
             .catch((err) => {
                 setErrorMessage('Operation failed. Please try again')
@@ -156,7 +156,7 @@ const AddArtistContent = () => {
     }
 
     const getData = (data: FormValues) => {
-        const artist = data.artistName && data.artistName.split(', ');
+        const artist = data.artistName && data.artistName.split(' ');
         const newData = {
             firstName: data.artistName ? artist[0] : null,
             lastName: (data.artistName && artist[1]) ? artist[1] : null,
@@ -168,9 +168,9 @@ const AddArtistContent = () => {
             }
         })
             .then((res) => {
-                router.push('/Artist')
                 setErrorMessage(`Artist Updated`)
                 setErrorType('success')
+                router.push('/Artist')
             })
             .catch((err) => {
                 setErrorMessage('Operation failed. Please try again')
