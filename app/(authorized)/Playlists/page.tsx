@@ -102,7 +102,6 @@ export default function Home() {
         }
       })
       setPlaylists(response.data.playlists)
-      setPlaylists(response.data.users)
     }
     catch (err) {
 

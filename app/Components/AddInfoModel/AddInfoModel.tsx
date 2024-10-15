@@ -51,8 +51,6 @@ const AddInfoModel = (props: Props) => {
         }
     }, [props.data])
 
-    
-
     return <form className={styles.container} onSubmit={handleSubmit(props.onSubmit)}>
         <div className={styles.mainContent}>
             <h4 className={styles.title}>Add {props.isAlbumInfo ? 'Album' : 'Artist'}</h4>

@@ -26,7 +26,7 @@ const LogIn = () => {
                 const decodedToken = jwtDecode(res.data);
                 if(decodedToken.role == 'admin') {
                     setCookies('token', res.data, 60)
-                    router.push('/')
+                    router.push('/User')
                 } else if(decodedToken.role == 'user') {
                     alert(`You Are Not Admin`)
                 }

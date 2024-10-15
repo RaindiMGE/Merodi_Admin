@@ -1,22 +1,18 @@
 'use client'
 import styles from './page.module.scss'
-import Search from '../Components/SearchComponent/SearchComponent'
-import AntTable from '../Components/AntTable/Table'
+import Search from '../../Components/SearchComponent/SearchComponent'
+import AntTable from '../../Components/AntTable/Table'
 import Image from 'next/image';
-import PopUps from '../Components/Pop-ups/MainPop-up/MainPop-up'
+import PopUps from '../../Components/Pop-ups/MainPop-up/MainPop-up'
 import React, { useEffect, useState } from 'react';
-import AddSongs, { MusicInfo } from '../Components/AddSongs/addSongs';
-import ChangePassword, { Input } from '../Components/ChangePassword/ChangePassword';
+import ChangePassword, { Input } from '../../Components/ChangePassword/ChangePassword';
 import axios from 'axios';
 import { getCookie } from '@/helpers/cookies';
-import Aside from '../Components/AsideMenu/Aside';
 import { jwtDecode } from 'jwt-decode';
 import { findUserEmail, findUsersIds } from '@/helpers/dataAction';
-import InfoPopUp from '../Components/Pop-ups/ErrorPop-up/InfoPop-ups';
+import InfoPopUp from '../../Components/Pop-ups/ErrorPop-up/InfoPop-ups';
 import { useRecoilState } from 'recoil';
-import { activeAsideMenuId } from '../states';
-import { AlbumInfo } from './Album/page';
-import { ArtistInfo } from './Artist/page';
+import { activeAsideMenuId } from '../../states';
 
 export interface UserInfo {
   email: string;

@@ -9,7 +9,7 @@ export default async function middleware(req: NextRequest) {
     const isPublicPath = publicRouters.includes(path);
 
     if (token && isPublicPath) {
-        return NextResponse.redirect(new URL('/', req.url))
+        return NextResponse.redirect(new URL('/User', req.url))
     }
 
     if (!token && !isPublicPath) {
@@ -17,6 +17,7 @@ export default async function middleware(req: NextRequest) {
     }
 
     return NextResponse.next();
+
 }
 
 export const config = {
