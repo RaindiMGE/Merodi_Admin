@@ -12,7 +12,7 @@ import axios from 'axios';
 import { message } from 'antd';
 import { getCookie } from '@/helpers/cookies';
 import { jwtDecode } from 'jwt-decode';
-import { findPlaylistTitle } from '@/helpers/dataAction';
+import { findPLaylistIds, findPlaylistTitle } from '@/helpers/dataAction';
 import { useRecoilState } from 'recoil';
 import { activeAsideMenuId } from '@/app/states';
 
@@ -94,6 +94,13 @@ export default function Home() {
       })
   };
 
+  const onChoosenItemsClick = (choosenItemsKeys: React.Key[]) => {
+    const deleteArtistsIds = findPLaylistIds(choosenItemsKeys, playlists);
+    for (let i = 0; i < deleteArtistsIds.length; i++) {
+      deletePlaylist(deleteArtistsIds[i])
+    }
+  }
+
   const onSearchChange = async (e: any) => {
     try {
       const response = await axios.get(`https://merodibackend-2.onrender.com/search?query=${e.target.value}`, {
@@ -123,7 +130,7 @@ export default function Home() {
           <Search onChange={onSearchChange} />
         </div>
         <div className={styles.tbl} >
-          <AntTable columns={[
+          <AntTable onChoosenItemsClick={onChoosenItemsClick} columns={[
             {
               title: 'Playlist Name',
               dataIndex: 'playlistName'

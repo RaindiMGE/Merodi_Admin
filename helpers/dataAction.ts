@@ -60,6 +60,16 @@ export const findArtistsIds = (choosenItemsKey: React.Key[], data: ArtistInfo[])
 }
 
 
+export const findPLaylistIds = (choosenItemsKey: React.Key[], data: PlaylistInfo[]) => {
+    const choosenItems = choosenItemsKey.map((key) => Number(key))
+    const playlistsIds = [];
+    for (let i = 0; i < choosenItems.length; i++) {
+        playlistsIds.push(data[choosenItems[i]].id)
+    }
+    return playlistsIds;
+}
+
+
 export const findAlbumName = (id: number, data: AlbumInfo[]) => {
     for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
