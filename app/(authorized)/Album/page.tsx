@@ -5,7 +5,6 @@ import Image from "next/image";
 import styles from "./page.module.scss";
 import SearchComponent from "@/app/Components/SearchComponent/SearchComponent";
 import AntTable from "@/app/Components/AntTable/Table";
-import SecondaryButton from "@/app/Components/Buttons/SecondaryButton/SecondaryButton";
 import axios from "axios";
 import { getCookie } from "@/helpers/cookies";
 import { useRecoilState } from "recoil";
