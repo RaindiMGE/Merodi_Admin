@@ -20,7 +20,7 @@ export interface PlaylistInfo {
   id: number;
   title: string;
   description: string;
-  image: string;
+  imageUrl: string;
   musics: {
     id: number;
     name: string;
@@ -155,7 +155,7 @@ export default function Home() {
                 return {
                   key: index,
                   playlistName: <div className={styles.favSong}>
-                    <img src={item.image} alt={'playlist cover'} width={32} height={32} />
+                    <img src={item.imageUrl} alt={'playlist cover'} width={32} height={32} />
                     <span>{item.title}</span>
                   </div>,
                   email: <div className={styles.favSong}>
