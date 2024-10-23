@@ -21,7 +21,7 @@ const Aside = () => {
     }
 
     return <aside className={styles.container}>
-        <Link href={'/'} ><Image src={'/Logo.svg'} alt='Logo Main' width={130} height={48} /></Link>
+        <Link href={'/User'} ><Image src={'/Logo.svg'} alt='Logo Main' width={130} height={48} /></Link>
         <div className={styles.navBarBox}>
             <NavBar pages={[
                 {
