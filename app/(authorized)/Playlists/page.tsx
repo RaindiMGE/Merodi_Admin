@@ -27,7 +27,13 @@ export interface PlaylistInfo {
     duration: number;
     imageUrl: string;
     albumId: number;
-  }[]
+  }[];
+  user: [
+    {
+      id: number;
+      email: string;
+    }
+  ]
 }
 
 export default function Home() {
@@ -153,10 +159,9 @@ export default function Home() {
                     <span>{item.title}</span>
                   </div>,
                   email: <div className={styles.favSong}>
-                    MakaSwift@gmail.com
+                    {item.user[0].email}
                   </div>,
                   numberOfSongs: item.musics.length,
-                  // numberOfSongs: item.musics.length,
                   action: <Image onClick={() => {
                     setShowPopUp(true)
                     setPlaylistId(item.id);
